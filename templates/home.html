@@ -1,0 +1,21 @@
+{% load staticfiles %}
+
+<html>
+<head>
+	{% include 'head.html' %}
+	
+</head>
+<body>
+	<div class = "container-fluid">
+		<!-- navigation bar -->
+		{% include 'nav_bar.html' %}
+	</div>	
+	<!-- content of the page -->
+	{% include 'content.html' %}		
+	<!-- footer -->
+	{% include 'footer.html' %}
+
+
+{% include 'js_link.html' %}
+</body>
+</html>
