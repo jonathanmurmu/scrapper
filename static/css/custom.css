@@ -1,40 +1,99 @@
-
-.vertical-center{
-	min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
-  	min-height: 100vh; /* These two lines are counted as one :-)       */
-
-	display: flex;
-  	align-items: center;
-}
-
-/*making it in center*/
-.horizontal-center{
-	padding-left: 10% !important;
-	padding-right: 10% !important;
-}
-.banner{
-	min-height: 500px;
-	width: 100%;
-}
 .section-one{
 	font-size: 25px;
+  padding-top: 2%;
 	padding-bottom: 5%;
+	margin-right: 0px; /*fix for the horizontal scroll bar*/
 }
 .section-two{
 	font-size: 20px;
 	padding-top: 5%;
 	padding-bottom: 5%;
 	background: #eeffff;
-}
-.intro-heading{
-	text-align: center;
-	font-size: 30px;
-	color: white;
-	top: 400px;
-	left: 650px;
-	position: absolute;
+	width: 100%;
+  height: 100%;
 }
 #footer{
 /*	text-align: center;*/
-	background: gray;
+	background: #211B1B;
+	color: #C6BFBF;
 }
+#footer a{
+	color: #114F84;;
+}
+
+/* Carousel base class */
+.carousel {
+  height: 100%;
+  margin-bottom: 60px;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel .item {
+  height: 100%;
+  background-color: #777;
+}
+.carousel-inner > .item > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 100%;
+}
+
+/* CUSTOMIZE THE NAVBAR
+-------------------------------------------------- */
+
+/* Special class on .container surrounding .navbar, used for positioning it into place. */
+.navbar-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 20;
+}
+
+/* Flip around the padding for proper display in narrow viewports */
+.navbar-wrapper > .container {
+  padding-right: 0;
+  padding-left: 0;
+}
+.navbar-wrapper .navbar {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.navbar-wrapper .navbar .container {
+  width: auto;
+}
+.navbar-custom{
+	opacity: 0.9;
+	/*background: rgba(23, 23, 24, 0.4)*/
+}
+.navbar-custom:hover{
+	opacity: 1.0;
+	/*background: rgba(23, 23, 24, 1.0);*/
+}
+.signup-form, .login-form{
+  margin-top: 5%;
+  padding-bottom: 5%;
+  margin-right: 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.form-actions{
+  margin-top: 10px;
+}
+.login-form{
+  padding-top: 5%;
+  margin-bottom: 5%;
+}
+.jumbotron{
+  border-radius: 6px;
+  padding-left: 10%;
+  padding-right: 10%;
+
+}
+

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block home-marquee %}
+<!-- navigation bar -->
+<!-- <div class = "container"> -->
+<!-- navigation bar -->
+<!-- <h1>Dashboard</h1>
+<h2>Hi, <a href="{% url 'profile'%}">{{user.first_name}}</a></h2>
+<a href="{% url 'logout' %}">logout</a>
+</div>
+ -->
+<!-- search form -->
+<div class="row signup-form">
+	<form action="{% url 'dashboard' %}" method="get">
+		{{ form.non_field_errors }}
+		{{form}}
+		<input type="submit" name="dashboard_search_submit" class="btn btn-primary" value="Search"/>
+	</form>
+</div>
+
+
+<div class="jumbotron">
+	<div class="row">
+		{{result_error}}
+		{%if result%}
+			{% for r in result %}
+				<a href="{{r.landing_url}}">
+				<div class="col-md-12">
+					<div class="col-md-3">
+						<img src="{{r.image}}"/>
+					</div>
+					<div class="col-md-9">
+						{{r.name}}
+					</div>
+					
+					<div class="col-md-9">
+						RS: {{r.price}}
+					</div>
+					<div class="col-md-9">
+						in {{r.site_reference}}
+					</div>
+				</div>
+				</a>
+				
+			{% endfor %}
+		{% endif %}
+	</div>
+</div>
+
+{% endblock%}
+
+

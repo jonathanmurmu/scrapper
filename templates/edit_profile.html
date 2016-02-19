@@ -1,0 +1,67 @@
+{% load staticfiles %}j
+<html>
+<head>
+	<!-- content inside the head tag of an html page -->
+		<meta charset="UTF-8">
+		<!--tell the IE to use the latest rendering engine-->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+		<!--set the page width to size of the device and zoom level to 1-->
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>{{title}}</title>
+		<!-- bootstrap link -->
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">	
+		<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+</head>
+<body>
+	<div class="container">
+		<h1>edit your profile here<h1>
+			<form acition="{% url 'edit_profile' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+				<!-- {sdfs{fosdsdfsdfsdsdfrm.as_sdfsdfp}} -->
+				{{ form.non_field_errors }}
+			   <!--  <fieldset> -->
+			        <legend class="page-header"></legend>
+			        <!-- displaying messages -->
+	                {% for message in messages %}
+	                    {% if 'error' in message.tags %}
+	                        <div class="alert alert-danger">
+	                            <a class="close" href="#" data-dismiss="alert">×</a>
+	                            <strong>Error!</strong>
+	                                {{ message }}
+	                        </div>
+	                    {% endif %}
+	                {% endfor %}
+			        {% for field in form %}
+			            {% if field.errors %}
+			                <div class="control-group has-error has-feedback">
+			                    <label class="control-label">{{ field.label }}*</label> 
+			                    <div class="controls has-error has-feedback">{{ field }}
+			                        <span class="help-inline text-danger">
+			                            {% for error in  field.errors %}{{ error }}{% endfor %}
+			                        </span>
+			                        <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+			                    </div>
+			                </div>
+			            {% else %}
+			                <div class="control-group">
+			                    <label class="control-label">{{ field.label }}*</label> 
+			                    <div class="controls">{{ field }}
+			                        {% if field.help_text %}
+			                            <p class="help-inline"><small>{{ field.help_text }}</small></p>
+			                        {% endif %}
+			                    </div>
+			                </div>
+			            {% endif %}
+			        {% endfor %}
+				<button type="submit" class="btn btn-primary">Save</button>
+			</form>
+			
+	</div>
+	
+	<!-- footer -->
+	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>

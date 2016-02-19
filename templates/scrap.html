@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block home-marquee %}
+<h1>Scrap</h1>
+Enter an item to scrap
+<div class="row search-form">
+	<div class="col-sm-8">
+		<form action="{% url 'scrap' %}" role="form" method="post">{% csrf_token%}
+			{{ form.non_field_errors }}
+			{{form.as_p}}
+			
+			<input class="btn btn-primary" type="submit" name="search_submit" value="Srape"/>
+		</form>
+	</div>
+</div>
+<div class="row">
+	<div class="jumbotron">
+		<div class="row">
+		{%if result%}
+			{% for r in result %}
+				<a href="{{r.landing_url}}">
+				<div class="col-md-12">
+					<div class="col-md-3">
+						<img src="{{r.image}}"/>
+					</div>
+					<div class="col-md-9">
+						{{r.name}}
+					</div>
+					
+					<div class="col-md-9">
+						RS: {{r.price}}
+					</div>
+				</div>
+				</a>
+				
+			{% endfor %}
+		{% endif %}
+		</div>
+	</div>
+</div>
+{% endblock%}

@@ -1,0 +1,59 @@
+{% load staticfiles %}
+<html>
+<head>
+	<!-- content inside the head tag of an html page -->
+		<meta charset="UTF-8">
+		<!--tell the IE to use the latest rendering engine-->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+		<!--set the page width to size of the device and zoom level to 1-->
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>{{title}}</title>
+		<!-- bootstrap link -->
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">	
+		<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+</head>
+<body>
+	<div class="container">
+		<h1>Profile<h1>
+
+		<h3>First Name : {{user.first_name}}</h3>
+		<h3>Last Name : {{user.last_name}}</h3>
+		<h3>Gender : {{user.userdetail.get_gender_display}}</h3>
+		<h3>Date of birth : {{user.userdetail.date_of_birth}}</h3>
+		<h3>Marital status : {{user.userdetail.get_marital_display}}</h3>
+		<h3>Email : {{user.email}}</h3>
+		<h3>Phone : {{user.userdetail.phone}}</h3>
+		<h3>Address : {{user.userdetail.address}}</h3>
+		<h3>Street : {{user.userdetail.street}}</h3>
+		<h3>City : {{user.userdetail.city}}</h3>
+		<h3>State : {{user.userdetail.state}}</h3>
+		<h3>Zip code : {{user.userdetail.zip_code}}</h3>
+		<h3>Preffered communication :</h3>
+		<ul>
+			{% if user.userdetail.mail %}
+				<li><h4>mail</h4></li>
+			{% endif%}
+			{% if user.userdetail.message %}
+				<li><h4>message</h4></li>
+			{% endif%}
+			{% if user.userdetail.phonecall %}
+				<li><h4>phonecall</h4></li>
+			{% endif%}
+			{% if user.userdetail.other %}
+				<li><h4>other</h4></li>
+			{% endif%}
+
+		</ul>
+		<h3>Extra note: {{user.userdetail.extra_note}}</h3>
+
+		<a href="{% url 'edit_profile' %}">Edit</a>
+	</div>
+	
+	<!-- footer -->
+	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>
