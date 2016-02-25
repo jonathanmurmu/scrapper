@@ -7,7 +7,6 @@
         <div class="jumbotron">
             <div>
                 <form class="form" action="{% url 'app_login' %}" method="post">{% csrf_token %}              
-                    <!--  <fieldset> -->
                     <legend class="page-header">Log in</legend>
                     <!-- displaying messages -->
                     {% for message in messages %}
@@ -48,10 +47,9 @@
                             </div>
                         {% endif %}
                     {% endfor %}
-                    <!-- </fieldset> -->
-                    <div><a href="">Forgot your password?</a></div>
+                    <div><a href="#">Forgot your password?</a></div>
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-primary" >Log in</button>
+                        <button type="submit" class="btn btn-warning" >Log in</button>
                     </div>              
                 </form>
             </div>

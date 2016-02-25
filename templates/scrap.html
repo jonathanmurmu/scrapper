@@ -1,41 +1,135 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block home-marquee %}
-<h1>Scrap</h1>
-Enter an item to scrap
 <div class="row search-form">
-	<div class="col-sm-8">
+	<div class = "col-sm-12">
+		<div class="row"><h3 class="text-center">What would you like to search?</h3>
+		</div><br>
+		<form action="{% url 'scrap' %}" method='post'>{% csrf_token %}
+			<div class="form-group col-sm-8 col-sm-offset-2">
+				{{ form.non_field_errors }}
+				{% if form.search.errors %}
+					<div class="has-error has-feedback">
+						{{ form.search }}
+						<span class="help-inline text-danger">
+		                    {% for error in  form.search_item.errors %}{{ error }}{% endfor %}
+		                </span>
+		                 <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+					</div>
+				{% else %}
+					<div class="controls has-feedback">
+ 						{{form.search}}
+ 						<span class="glyphicon glyphicon-search form-control-feedback"></span>
+						</div>
+				{% endif %}
+					
+			</div>
+			<!-- site choice -->
+			<div class="form-group col-sm-8 col-sm-offset-2">
+				{% if form.site_choice.errors %}
+					{{ form.site_choice.label_tag }}
+					<div class="col-sm-11 col-sm-offset-1">
+						{% for field in  form.site_choice %}<div>{{ field }}</div>{% endfor %}
+						<span class="help-inline text-danger">
+			                {% for error in  form.site_choice.errors %}{{ error }}{% endfor %}
+			            </span>
+					</div>
+				{% else %}
+					{{ form.site_choice.label_tag }}
+					<div class="col-sm-11 col-sm-offset-1">
+						{% for field in  form.site_choice %}<div>{{ field }}</div>{% endfor %}
+					</div>
+				{% endif %}
+			</div>
+			<!-- scrap button -->
+			<div class="form-group col-sm-12 text-center">
+				<button type="submit" name="search_submit" class="btn btn-primary " >Scrap</button>
+			</div>
+
+		</form>
+		{% if feedback %}
+		<div class="col-sm-12 text-center  ">
+			<h3>Sorry, Search item is not present in database.<a href="{% url 'scrap' %}">Lets scrap it</a></h3>
+		</div>
+		{% endif %}
+	</div>
+	<!-- <div class="col-sm-8">
 		<form action="{% url 'scrap' %}" role="form" method="post">{% csrf_token%}
 			{{ form.non_field_errors }}
 			{{form.as_p}}
 			
 			<input class="btn btn-primary" type="submit" name="search_submit" value="Srape"/>
 		</form>
-	</div>
-</div>
-<div class="row">
-	<div class="jumbotron">
-		<div class="row">
+	</div> -->
+
+	<!-- displaying the result after searching -->
+	<div class="row">
+		{{result_error}}
 		{%if result%}
+		<div class="row">
 			{% for r in result %}
-				<a href="{{r.landing_url}}">
-				<div class="col-md-12">
-					<div class="col-md-3">
-						<img src="{{r.image}}"/>
+			<div class='col-sm-12'>
+				<div class="page-header col-sm-12">
+				</div>
+
+				<div class="col-sm-12">
+					<!-- displaying the image -->
+					<div class="col-md-3 text-center">
+						<a href="{{r.landing_url}}">
+							<img class="text-center" src="{{r.image}}"/>
+						</a>
 					</div>
-					<div class="col-md-9">
-						{{r.name}}
+					<div class="col-sm-7">
+						<!-- displaying the name -->
+						<div class="col-sm-12">
+							<a href="{{r.landing_url}}"><h4>{{r.name}}</h4></a>
+						</div>
+						<!-- displaying the price -->
+						<div class="col-sm-12">
+							<h4>Rs: <a href="{{r.landing_url}}"><span class="text-danger">{{r.price}}</span></h4></a>
+						</div>
+						<!-- displaying the category -->
+						<div class="col-sm-12">
+							<h5>Category : {{r.product_type}}</h5>
+						</div>
+						<!-- displaying the site reference -->
+						<div class="col-sm-12">
+							<h5>In : {{r.site_reference}}</h5>
+						</div>
 					</div>
-					
-					<div class="col-md-9">
-						RS: {{r.price}}
+					<div class="col-sm-2 ">
+						<div class="text-center"><a href="{{r.landing_url}}" class="btn btn-lg btn-warning">Buy</a></div>
 					</div>
 				</div>
-				</a>
-				
+
+			</div>
 			{% endfor %}
-		{% endif %}
 		</div>
+		{% endif %}
+	</div>
+
+</div> <!-- / row seach-form -->
+<div class="row">
+	<div class="row">
+	{%if result%}
+		{% for r in result %}
+			<a href="{{r.landing_url}}">
+			<div class="col-md-12">
+				<div class="col-md-3">
+					<img src="{{r.image}}"/>
+				</div>
+				<div class="col-md-9">
+					{{r.name}}
+				</div>
+				
+				<div class="col-md-9">
+					RS: {{r.price}}
+				</div>
+			</div>
+			</a>
+			
+		{% endfor %}
+	{% endif %}
 	</div>
 </div>
 {% endblock%}

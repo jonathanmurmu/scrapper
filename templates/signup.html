@@ -1,9 +1,20 @@
 {% extends 'base_home.html' %}
 {% block home-marquee %}
 <div class="row signup-form">
+	{% if message_success %}
+
+		<div class="col-sm-offset-3 col-md-6 min-height-fix">			
+			<div class="alert alert-success text-center">
+	            <a class="close" href="#" data-dismiss="alert">×</a>
+	            <strong>Registered Successfully!</strong>
+	                {{ message_success }}
+	        </div>			
+		</div>
+	{% else%}
 		<div class="col-md-4"></div>
 		<div class="col-md-4">
-				<form class="form" action="{% url 'signup' %}" method="post">{% csrf_token %}
+			<!-- display success message when successfully registered -->			
+			<form class="form" action="{% url 'signup' %}" method="post">{% csrf_token %}
 				{{ form.non_field_errors }}
 			   <!--  <fieldset> -->
 			        <legend class="page-header">Create An Account</legend>
@@ -41,10 +52,11 @@
 			        {% endfor %}
 			    <!-- </fieldset> -->
 			    <div class="form-actions">
-			        <button type="submit" class="btn btn-primary" >Submit</button>
+			        <button type="submit" class="btn btn-warning" >Submit</button>
 			    </div>
-			</form>			
+			</form>
 		</div>		
 		<div class="col-md-4"></div>	
+	{% endif %}	
 </div>
 {% endblock %}

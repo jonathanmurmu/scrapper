@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load static %}
 <html>
 <head>
 	<!-- content inside the head tag of an html page -->
@@ -12,48 +12,182 @@
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">	
 		<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/scrolling-nav.css' %}">
+
 </head>
 <body>
-	<div class="container">
-		<h1>Profile<h1>
+	<!-- naviagation bar -->
+	{% include 'navbar_dashboard.html' %}
+	<!-- profile page content -->
+	<div class="container-fluid profile-background">
+	    <div class="row profile">
+			<div class="col-md-3">
+				<div class="profile-sidebar">
+					<!-- SIDEBAR USERPIC -->
+					<div class="profile-userpic">
+						<img src="{% get_static_prefix %}{{user.userdetail.image}}" class="img-responsive" alt="Image not found ">
+					</div>
+					<!-- END SIDEBAR USERPIC -->
+					<!-- SIDEBAR USER TITLE -->
+					<div class="profile-usertitle">
+						<div class="profile-usertitle-name">
+							{{user.first_name}} {{user.last_name}}
+						</div>
+						<div class="profile-usertitle-job email">
+							{{user.email}}
+						</div>
+					</div>
+					<!-- END SIDEBAR USER TITLE -->
+					<!-- SIDEBAR BUTTONS -->
+					
+					<!-- END SIDEBAR BUTTONS -->
+					<!-- SIDEBAR MENU -->
+					<div class="profile-usermenu">
+						<ul class="nav">
+							<li class="active">
+								<a href="{% url 'profile' %}">
+								<i class="glyphicon glyphicon-home"></i>
+								Overview </a>
+							</li>
+							<li>
+								<a href="{% url 'edit_profile' %}">
+								<i class="glyphicon glyphicon-user"></i>
+								Edit Profile </a>
+							</li>
+							<li>
+								<a href="{% url 'logout' %}">
+								<i class="glyphicon glyphicon-log-out"></i>
+								Log out </a>
+							</li>
+						</ul>
+					</div>
+					<!-- END MENU -->
+				</div>
+			</div> <!--col-md-3-->
+			<div class="col-md-9">
+	            <div class="profile-content">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="page-header">
+									<h1>
+										Profile
+									</h1>
+								</div>
+							</div>
+						</div>
+						<!-- personal information -->
+						<div class="row">
+							<div class="col-md-3">
+								Personal Information
+							</div>
+							<div class="col-md-2">
+								<div class="col-md-12"><p>Name :</p></div>
+								<div class="col-md-12"><p>Gender :</p></div>
+								<div class="col-md-12"><p>Date of birth :</p></div>
+								<div class="col-md-12"><p>Marital status :</p></div>
+							</div>
+							<div class="col-md-7">
+								<div class="col-md-12"><P>{{user.first_name}} {{user.last_name}}</P></div>
+								<div class="col-md-12"><P>{{user.userdetail.get_gender_display}}</P></div>
+								<div class="col-md-12"><P>{{user.userdetail.date_of_birth}}</P></div>
+								<div class="col-md-12"><P>{{user.userdetail.get_marital_display}}</P></div>
+							</div>
+						</div>
+						<!-- contact detail -->
+						<div class="page-header"></div>						
+						<div class="row">
+							<div class="col-md-3">
+								Contact Details
+							</div>
+							<div class="col-md-2">
+								<div class="col-md-12"><p>Email :</p></div>
+								<div class="col-md-12"><p>Phone :</p></div>
+							</div>
+							<div class="col-md-7">
+								<div class="col-md-12"><P>{{user.email}}</P></div>
+								<div class="col-md-12"><P>{{user.userdetail.phone}}</P></div>
+							</div>
+						</div>
+						<!-- address -->
+						<div class="page-header"></div>
+						<div class="row">
+							<div class="col-md-3">
+								Address
+							</div>
+							<div class="col-md-2">
+								<div class="col-md-12"><p>Address :</p></div>
+								<div class="col-md-12"><p>Street :</p></div>
+								<div class="col-md-12"><p>City :</p></div>
+								<div class="col-md-12"><p>State :</p></div>
+								<div class="col-md-12"><p>Zip code :</p></div>
+							</div>
+							<div class="col-md-7">
+								<div class="col-md-12"><P>{{user.userdetail.address}}</P></div>
+								<div class="col-md-12"><P>{{user.userdetail.street}}</P></div>
+								<div class="col-md-12"><p>{{user.userdetail.city}}</p></div>
+								<div class="col-md-12"><p>{{user.userdetail.state}}</p></div>
+								<div class="col-md-12"><p>{{user.userdetail.zip_code}}</p></div>
+							</div>
+						</div>
+						<!-- extra note -->
+						<div class="page-header"></div>
+						<div class="row">
+							<div class="col-md-3">
+								Extra Note
+							</div>
+							<div class="col-md-9">
+								<div class="col-md-12">
+									<p>
+										{{user.userdetail.extra_note}}
+									</p>
+								</div>
+							</div>
+						</div>
+						<!-- preffered communication -->
+						<div class="page-header"></div>
+						<div class="row">
+							<div class="col-md-3">
+								Preffered communication
+							</div>
+							<div class="col-md-2">
+								<div class="col-md-12">
+									<p>
+										<ul>
+											{% if user.userdetail.mail %}
+												<li><h4>mail</h4></li>
+											{% endif%}
+											{% if user.userdetail.message %}
+												<li><h4>message</h4></li>
+											{% endif%}
+											{% if user.userdetail.phonecall %}
+												<li><h4>phonecall</h4></li>
+											{% endif%}
+											{% if user.userdetail.other %}
+												<li><h4>other</h4></li>
+											{% endif%}
 
-		<h3>First Name : {{user.first_name}}</h3>
-		<h3>Last Name : {{user.last_name}}</h3>
-		<h3>Gender : {{user.userdetail.get_gender_display}}</h3>
-		<h3>Date of birth : {{user.userdetail.date_of_birth}}</h3>
-		<h3>Marital status : {{user.userdetail.get_marital_display}}</h3>
-		<h3>Email : {{user.email}}</h3>
-		<h3>Phone : {{user.userdetail.phone}}</h3>
-		<h3>Address : {{user.userdetail.address}}</h3>
-		<h3>Street : {{user.userdetail.street}}</h3>
-		<h3>City : {{user.userdetail.city}}</h3>
-		<h3>State : {{user.userdetail.state}}</h3>
-		<h3>Zip code : {{user.userdetail.zip_code}}</h3>
-		<h3>Preffered communication :</h3>
-		<ul>
-			{% if user.userdetail.mail %}
-				<li><h4>mail</h4></li>
-			{% endif%}
-			{% if user.userdetail.message %}
-				<li><h4>message</h4></li>
-			{% endif%}
-			{% if user.userdetail.phonecall %}
-				<li><h4>phonecall</h4></li>
-			{% endif%}
-			{% if user.userdetail.other %}
-				<li><h4>other</h4></li>
-			{% endif%}
+										</ul>
+									</p>
+								</div>
+							</div>
+							<div class="col-md-7">
+							</div>
+						</div>
 
-		</ul>
-		<h3>Extra note: {{user.userdetail.extra_note}}</h3>
-
-		<a href="{% url 'edit_profile' %}">Edit</a>
-	</div>
+						
+	            </div> <!--profile-content end-->
+			</div> <!----col-md-3-->
+		</div> <!--row profile-->
+	</div>	
 	
 	<!-- footer -->
+	{% include 'footer.html'%}
 	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
 	<script src="{% static 'js/jquery.min.js' %}"></script>
 	<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
 	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<!-- Scrolling Nav JavaScript -->
+    <script src="{% static 'js/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'js/scrolling-nav.js' %}"></script>
 </body>
 </html>

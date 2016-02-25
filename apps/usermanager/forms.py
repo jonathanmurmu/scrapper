@@ -1,15 +1,18 @@
-"""Forms used in scrapper project."""
-from django.contrib.auth.models import User
+"""Forms for Usermanager app.
+
+Signup, login and edit profile form.
+"""
+# from django.contrib.auth.models import User
 from django import forms
 from .models import UserDetail
 from apps import constants
-from django.forms import extras
+# from django.forms import extras
 
 
 class SignUpForm(forms.Form):
     """Sign up form.
 
-    Form for register the user.
+    Form for registering the user.
     """
 
     first_name = forms.CharField(
@@ -44,7 +47,7 @@ class SignUpForm(forms.Form):
 
 
 class LoginForm(forms.Form):
-    """docstring for LoginForm."""
+    """Login Form."""
 
     username = forms.CharField(
         max_length=30, required=True,
@@ -59,8 +62,9 @@ class LoginForm(forms.Form):
 
 
 class EditProfileForm(forms.ModelForm):
-    """Edit profile page."""
+    """Form for editing the profile."""
 
+    # textboxes
     first_name = forms.CharField(
         max_length=30, required=True,
         widget=forms.TextInput(attrs={
@@ -70,39 +74,86 @@ class EditProfileForm(forms.ModelForm):
         widget=forms.TextInput(attrs={
             'class': 'form-control', 'required': False})
     )
+
+    # radio button
     gender = forms.ChoiceField(
         choices=constants.GENDER_CHOICES, required=False,
         widget=forms.RadioSelect(attrs={'required': False}))
+
+    # textboxes
     date_of_birth = forms.DateField(
-        required=False, widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control'}))
-    marital = forms.ChoiceField(choices=constants.MARITAL_CHOICES, required=False)
-    phone = forms.IntegerField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'required': False}))
-    address = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3}))
-    street = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'required': False}))
-    city = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'required': False}))
-    state = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'required': False}))
-    zip_code = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'required': False}))
+        required=False,
+        widget=forms.TextInput(attrs={
+            'type': 'date', 'class': 'form-control'}))
+
+    # dropdown box
+    marital = forms.ChoiceField(
+        choices=constants.MARITAL_CHOICES, required=False)
+
+    # textboxes
+    phone = forms.IntegerField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control', 'required': False}))
+
+    # textarea
+    address = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={
+            'class': 'form-control', 'rows': 3}))
+
+    # textboxes
+    street = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control', 'required': False}))
+    city = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control', 'required': False}))
+    state = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control', 'required': False}))
+    zip_code = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control', 'required': False}))
+
+    # checkboxes
     mail = forms.BooleanField(required=False)
     message = forms.BooleanField(required=False)
     phonecall = forms.BooleanField(required=False)
     other = forms.BooleanField(required=False)
-    extra_note = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3}))
+    extra_note = forms.CharField(
+        required=False, widget=forms.Textarea(attrs={
+            'class': 'form-control', 'rows': 3}))
+
+    # image field
     image = forms.ImageField(required=False)
 
-
     class Meta:
+        """Meta for UserDetail."""
 
+        # UserDetail model
         model = UserDetail
-        fields = ['first_name', 'last_name', 'gender', 'date_of_birth', 'marital', 'phone', 'address', 'street', 'city', 'state', 'zip_code', 'mail', 'message', 'phonecall', 'other', 'extra_note', 'image']
-        # fields = ['first_name', 'last_name', 'gender']
-        # exclude = ['user_id', 'id']
+        # specifying the fields to be shown in the form
+        fields = [
+            'first_name', 'last_name', 'gender', 'date_of_birth',
+            'marital', 'phone', 'address', 'street', 'city', 'state',
+            'zip_code', 'mail', 'message', 'phonecall', 'other', 'extra_note',
+            'image'
+        ]
 
     def __init__(self, request, *args, **kwargs):
+        """Setting initial value for fields."""
         super(EditProfileForm, self).__init__(*args, **kwargs)
-        # import pdb
-        # pdb.set_trace()
+
+        # from auth_user table
         self.fields['first_name'].initial = request.user.first_name
         self.fields['last_name'].initial = request.user.last_name
+
+        # from userdetial table
         ud = UserDetail.objects.get(user=request.user)
         self.fields['gender'].initial = ud.gender
         self.fields['date_of_birth'].initial = ud.date_of_birth
@@ -118,6 +169,3 @@ class EditProfileForm(forms.ModelForm):
         self.fields['phonecall'].initial = ud.phonecall
         self.fields['other'].initial = ud.other
         self.fields['extra_note'].initial = ud.extra_note
-
-    def save():
-        pass

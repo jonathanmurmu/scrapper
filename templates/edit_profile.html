@@ -1,4 +1,4 @@
-{% load staticfiles %}j
+{% load static %}j
 <html>
 <head>
 	<!-- content inside the head tag of an html page -->
@@ -12,56 +12,334 @@
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">	
 		<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/scrolling-nav.css' %}">
+
 </head>
 <body>
-	<div class="container">
-		<h1>edit your profile here<h1>
-			<form acition="{% url 'edit_profile' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
-				<!-- {sdfs{fosdsdfsdfsdsdfrm.as_sdfsdfp}} -->
-				{{ form.non_field_errors }}
-			   <!--  <fieldset> -->
-			        <legend class="page-header"></legend>
-			        <!-- displaying messages -->
-	                {% for message in messages %}
-	                    {% if 'error' in message.tags %}
-	                        <div class="alert alert-danger">
-	                            <a class="close" href="#" data-dismiss="alert">×</a>
-	                            <strong>Error!</strong>
-	                                {{ message }}
-	                        </div>
-	                    {% endif %}
-	                {% endfor %}
-			        {% for field in form %}
-			            {% if field.errors %}
-			                <div class="control-group has-error has-feedback">
-			                    <label class="control-label">{{ field.label }}*</label> 
-			                    <div class="controls has-error has-feedback">{{ field }}
-			                        <span class="help-inline text-danger">
-			                            {% for error in  field.errors %}{{ error }}{% endfor %}
-			                        </span>
-			                        <span class="glyphicon glyphicon-remove form-control-feedback"></span>
-			                    </div>
-			                </div>
-			            {% else %}
-			                <div class="control-group">
-			                    <label class="control-label">{{ field.label }}*</label> 
-			                    <div class="controls">{{ field }}
-			                        {% if field.help_text %}
-			                            <p class="help-inline"><small>{{ field.help_text }}</small></p>
-			                        {% endif %}
-			                    </div>
-			                </div>
-			            {% endif %}
-			        {% endfor %}
-				<button type="submit" class="btn btn-primary">Save</button>
-			</form>
-			
-	</div>
+	<!-- naviagation bar -->
+	{% include 'navbar_dashboard.html' %}
+	<div class="container-fluid profile-background">
+	    <div class="row profile">
+			<div class="col-md-3">
+				<div class="profile-sidebar">
+					<!-- SIDEBAR USERPIC -->
+					<div class="profile-userpic">
+						<img src="{% get_static_prefix %}{{user.userdetail.image}}" class="img-responsive" alt="">
+					</div>
+					<!-- END SIDEBAR USERPIC -->
+					<!-- SIDEBAR USER TITLE -->
+					<div class="profile-usertitle">
+						<div class="profile-usertitle-name">
+							{{user.first_name}} {{user.last_name}}
+						</div>
+						<div class="profile-usertitle-job email">
+							{{user.email}}
+						</div>
+					</div>
+					<!-- END SIDEBAR USER TITLE -->
+					<!-- SIDEBAR BUTTONS -->
+					
+					<!-- END SIDEBAR BUTTONS -->
+					<!-- SIDEBAR MENU -->
+					<div class="profile-usermenu">
+						<ul class="nav">
+							<li>
+								<a href="{% url 'profile' %}">
+								<i class="glyphicon glyphicon-home"></i>
+								Overview </a>
+							</li>
+							<li class="active">
+								<a href="{% url 'edit_profile' %}">
+								<i class="glyphicon glyphicon-user"></i>
+								Edit Profile </a>
+							</li>
+							<li>
+								<a href="{% url 'logout' %}">
+								<i class="glyphicon glyphicon-log-out"></i>
+								Log out </a>
+							</li>
+						</ul>
+					</div>
+					<!-- END MENU -->
+				</div>
+			</div> <!--col-md-3-->
+			<div class="col-md-9">
+	            <div class="profile-content">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="page-header">
+									<h1>
+										Edit Your Profile
+									</h1>
+								</div>
+								<!-- feedback message -->
+								{% if success_message %}
+								<div class="col-md-12">
+									<div class="alert alert-success text-center">
+							            <a class="close" href="#" data-dismiss="alert">×</a>
+							            <strong>{{ success_message }}</strong>							                
+							        </div>
+								</div>
+								{% endif %}
+								{% if error_message %}
+								<div class="col-md-12">
+									<div class="alert alert-success text-center">
+							            <a class="close" href="#" data-dismiss="alert">×</a>
+							            <strong>{{ error_message }}</strong>							                
+							        </div>
+								</div>
+								{% endif %}
+							</div>
+						</div>
+						<!-- personal information -->
+						<div class="row">
+							<form acition="{% url 'edit_profile' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+							{{ form.non_field_errors }}
+								<div class="col-md-2"></div>
+								<div class="col-md-8">
+									<!-- First name field -->
+									<div class="form-group col-sm-6">
+										{{ form.first_name.label_tag }}
+
+										{% if form.first_name.errors %}
+										<div class="has-error has-feedback">
+											{{ form.first_name }}
+											<span class="help-inline text-danger">
+							                    {% for error in  form.first_name.errors %}{{ error }}{% endfor %}
+							                </span>
+							                 <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+										</div>
+										{% else %}
+											{{ form.first_name }}
+										{% endif %}
+
+									</div>
+
+									<!-- Last name field -->
+									<div class="form-group col-sm-6">
+										{{ form.last_name.label_tag }}
+
+										{% if form.last_name.errors %}
+										<div class="has-error has-feedback">
+											{{ form.last_name }}
+											<span class="help-inline text-danger">
+							                    {% for error in  form.last_name.errors %}{{ error }}{% endfor %}
+							                </span>
+							                 <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+										</div>
+										{% else %}
+											{{ form.last_name }}
+										{% endif %}
+									</div>									
+									<!-- Marital field -->
+									<div class="form-group col-sm-6">
+										{{ form.marital.label_tag }}
+										<div>{{ form.marital }}</div>
+										<div class="help-inline text-danger">{{ form.phone.errors }}</div>
+									</div>		
+									<!-- Gender field -->
+									<div class="form-group col-sm-6">
+										{{ form.gender.label_tag }}
+										<div>
+											{% for field in  form.gender %}{{ field }}{% endfor %}
+										</div>
+										
+									</div>							
+									<!-- Date of birth field -->
+									<div class="form-group col-sm-6">
+										{{ form.date_of_birth.label_tag }}
+
+										{% if form.date_of_birth.errors %}
+										<div class="has-error has-feedback">
+											{{ form.date_of_birth }}
+											<span class="help-inline text-danger">
+							                    {% for error in  form.date_of_birth.errors %}{{ error }}{% endfor %}
+							                </span>
+							                 <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+										</div>
+										{% elif form.date_of_birth.help_text %}
+											<div>{{ form.date_of_birth }}</div>
+											<p class="help-block "><small>{{ form.date_of_birth.help_text }}</small></p>
+										{% else %}
+											<div>{{ form.date_of_birth }}</div>
+										{% endif %}
+									</div>
+									<!-- Phone field -->
+									<div class="form-group col-sm-6">
+										{{ form.phone.label_tag }}
+
+										{% if form.phone.errors %}
+										<div class="has-error has-feedback">
+											{{ form.phone }}
+											<span class="help-inline text-danger">
+							                    {% for error in  form.phone.errors %}{{ error }}{% endfor %}
+							                </span>
+							                 <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+										</div>
+										{% elif form.phone.help_text %}
+											<div>{{ form.phone }}</div>
+											<p class="help-block">{{ form.phone.help_text }}</p>
+										{% else %}
+											<div>{{ form.phone }}</div>
+										{% endif %}
+									</div>
+							    	
+									<!-- Address field -->
+									<div class="form-group col-sm-12">
+										{{ form.address.label_tag }}
+
+										{% if form.address.errors %}
+										<div class="has-error has-feedback">
+											{{ form.address }}
+											<span class="help-inline text-danger">
+							                    {% for error in  form.address.errors %}{{ error }}{% endfor %}
+							                </span>
+							                 <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+										</div>
+										{% else %}
+											<div>{{ form.address }}</div>
+										{% endif %}
+
+									</div>
+
+									<!-- Street field -->
+									<div class="form-group col-sm-6">
+										{{ form.street.label_tag }}
+
+										{% if form.street.errors %}
+										<div class="has-error has-feedback">
+											{{ form.street }}
+											<span class="help-inline text-danger">
+							                    {% for error in  form.street.errors %}{{ error }}{% endfor %}
+							                </span>
+							                 <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+										</div>
+										{% else %}
+											<div>{{ form.street }}</div>
+										{% endif %}
+									</div>
+									<!-- City field -->
+									<div class="form-group col-sm-6">
+										{{ form.city.label_tag }}
+
+										{% if form.city.errors %}
+										<div class="has-error has-feedback">
+											{{ form.city }}
+											<span class="help-inline text-danger">
+							                    {% for error in  form.city.errors %}{{ error }}{% endfor %}
+							                </span>
+							                 <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+										</div>
+										{% else %}
+											<div>{{ form.city }}</div>
+										{% endif %}
+									</div>
+									<!-- State field -->
+									<div class="form-group col-sm-6">
+										{{ form.state.label_tag }}
+
+										{% if form.state.errors %}
+										<div class="has-error has-feedback">
+											{{ form.state }}
+											<span class="help-inline text-danger">
+							                    {% for error in  form.state.errors %}{{ error }}{% endfor %}
+							                </span>
+							                 <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+										</div>
+										{% else %}
+											<div>{{ form.state }}</div>
+										{% endif %}
+									</div>
+
+									<!-- Zip code field -->
+									<div class="form-group col-sm-6">
+										{{ form.zip_code.label_tag }}
+
+										{% if form.zip_code.errors %}
+										<div class="has-error has-feedback">
+											{{ form.zip_code }}
+											<span class="help-inline text-danger">
+							                    {% for error in  form.zip_code.errors %}{{ error }}{% endfor %}
+							                </span>
+							                 <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+										</div>
+										{% else %}
+											<div>{{ form.zip_code }}</div>
+										{% endif %}
+									</div>
+									<!-- Preferred communication field -->
+									<div class="form-group col-sm-12">
+										<div><label>Preferred communication:</label></div>
+										<div class="col-sm-6">
+											<label>{{ form.mail}} Mail</label>
+										</div>
+										<div class="col-sm-6">
+											<label>{{ form.message}} Message</label>
+										</div>
+										<div class="col-sm-6">
+											<label>{{ form.phonecall}} Phone</label>
+										</div>
+										<div class="col-sm-6">
+											<label>{{ form.other}} Other</label>
+										</div>
+									</div >									
+									<!-- Extra note field -->
+									<div class="form-group col-sm-12">
+										{{ form.extra_note.label_tag }}
+
+										{% if form.extra_note.errors %}
+										<div class="has-error has-feedback">
+											{{ form.extra_note }}
+											<span class="help-inline text-danger">
+							                    {% for error in  form.extra_note.errors %}{{ error }}{% endfor %}
+							                </span>
+							                 <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+										</div>
+										{% else %}
+											<div>{{ form.extra_note }}</div>
+										{% endif %}
+									</div>
+									<!-- image field -->
+									<div class="form-group col-sm-12">
+										{{ form.image.label_tag }}
+
+										{% if form.image.errors %}
+										<div class="has-error has-feedback">
+											{{ form.image }}
+											<span class="help-inline text-danger">
+							                    {% for error in  form.image.errors %}{{ error }}{% endfor %}
+							                </span>
+							                 <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+										</div>
+										{% elif form.image.help_text %}
+											<div>{{ form.image }}</div>
+											<p class="help-block"><small>{{ form.image.help_text }}</small></p>
+										{% else %}
+											<div>{{ form.image }}</div>
+										{% endif %}
+									</div>
+									<div class="form-group col-sm-12">
+										<button type="submit" class="btn btn-success btn-lg " >Save</button>
+									</div>
+								</div> <!-- /col-md-8 -->
+								<div class="col-md-2"></div>
+							</form>
+						</div>						
+	            </div> <!--profile-content end-->
+			</div> <!----col-md-3-->
+		</div> <!--row profile-->
+	</div>	
 	
 	<!-- footer -->
+	{% include 'footer.html'%}
+
+	
 	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
 	<script src="{% static 'js/jquery.min.js' %}"></script>
 	<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
 	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<!-- Scrolling Nav JavaScript -->
+    <script src="{% static 'js/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'js/scrolling-nav.js' %}"></script>
 </body>
 </html>
