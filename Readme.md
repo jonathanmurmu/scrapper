@@ -60,6 +60,7 @@ Installation:
 		$ source /path/to/enviornment/directory/bin/activate
 
 2. Clone the project to a folder where you would like the store the project.
+
 		$ git clone https://github.com/jonathanmurmu/scrapper.git
 
 3. Create a database named 'scapper'
