@@ -74,7 +74,6 @@ Installation:
     	}
 	}
 
-	# for sending email
 	EMAIL_HOST = 'your email host'
 	EMAIL_HOST_USER = 'email username'
 	EMAIL_HOST_PASSWORD = 'email password'
