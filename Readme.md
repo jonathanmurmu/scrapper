@@ -69,7 +69,6 @@ Installation:
 		DATABASES = {
 
 	    'default': {
-
 	        'ENGINE': 'django.db.backends.mysql',
 	        'NAME': 'scrapper',
 	        'USER': 'mysql client username',
@@ -77,17 +76,12 @@ Installation:
 	        'HOST': '',
 	        'PORT': '',
 	    	}
-
 		}
 
 		EMAIL_HOST = 'your email host'
-
 		EMAIL_HOST_USER = 'email username'
-
 		EMAIL_HOST_PASSWORD = 'email password'
-
 		EMAIL_PORT = 587
-
 		EMAIL_USE_TLS = True
 
 
