@@ -2,7 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from apps import constants
-import datetime
+from django.utils import timezone
 
 
 def generate_filename(self, filename):
@@ -34,7 +34,7 @@ class UserDetail(models.Model):
     zip_code = models.CharField(max_length=6, null=True, blank=True)
 
     # contact field
-    phone = models.IntegerField(null=True, blank=True)
+    phone = models.CharField(max_length=20, null=True, blank=True)
 
     # extra note field (textarea in form)
     extra_note = models.CharField(max_length=254, null=True, blank=True)
@@ -62,7 +62,7 @@ class UserActivation(models.Model):
         on_delete=models.CASCADE,
     )
     activation_key = models.CharField(max_length=40, blank=True)
-    key_expires = models.DateTimeField(default=datetime.date.today())
+    key_expires = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         """Value to return if object is called."""

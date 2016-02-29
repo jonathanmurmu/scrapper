@@ -6,7 +6,6 @@ from django.utils.decorators import method_decorator
 from apps.usermanager import forms
 from django.contrib.auth.models import User
 from apps.usermanager.models import UserDetail
-from django.http import HttpResponse
 from django.conf import settings
 import os
 from apps.home.scrap import Scrap
@@ -16,6 +15,8 @@ from apps.home.models import Product
 from django.db.models import Q
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+import logging
+from apps import constants
 
 
 class HomeView(TemplateView):
@@ -62,7 +63,7 @@ class DashboardView(TemplateView):
                 )
                 # when no resuts are found set the result error variable
                 if not products:
-                    result_error = "No result found, please scape this item"
+                    result_error = "No result found error."
         else:
             form = DashboardSearchForm()
         # create a dictionary for the context
@@ -121,35 +122,8 @@ class EditProfileView(TemplateView):
         # if the form is valid and its attribute enctype="multipart/form-data"
         if form.is_valid() and form.is_multipart():
             try:
-                data = request.POST.copy()
-                # handling the each unchecked checkbox
-                # and radio button values if they are not selected
-                try:
-                    mail = data['mail']
-                except:
-                    mail = None
-                try:
-                    message = data['message']
-                except:
-                    message = None
-                try:
-                    phonecall = data['phonecall']
-                except:
-                    phonecall = None
-                try:
-                    other = data['other']
-                except:
-                    other = None
-                try:
-                    gender = data['gender']
-                except:
-                    gender = None
-
-                # handling the date field and number value
-                if data['date_of_birth'] in ['', ' ', None]:
-                    data['date_of_birth'] = None
-                if data['phone'] in ['', ' ', None]:
-                    data['phone'] = None
+                # initialize 'data' with the cleaned data
+                data = form.cleaned_data
 
                 # intializing the 'upload_to' variable by a directory named
                 # as the primary key of the user.
@@ -161,6 +135,7 @@ class EditProfileView(TemplateView):
                     file_name = request.FILES['image']
                 except:
                     file_name = None
+
                 # initializing the 'image' variable with the directory name
                 # and the file name
                 image = '{0}{1}'.format(upload_to, file_name)
@@ -176,9 +151,10 @@ class EditProfileView(TemplateView):
                     'date_of_birth': data['date_of_birth'],
                     'street': data['street'],
                     'phone': data['phone'], 'state': data['state'],
-                    'extra_note': data['extra_note'], 'message': message,
-                    'other': other, 'phonecall': phonecall,
-                    'mail': mail, 'gender': gender,
+                    'extra_note': data['extra_note'],
+                    'message': data['message'],
+                    'other': data['other'], 'phonecall': data['phonecall'],
+                    'mail': data['mail'], 'gender': data['gender'],
                     'user_id': request.user.pk, 'zip_code': data['zip_code']
                 }
 
@@ -188,36 +164,19 @@ class EditProfileView(TemplateView):
                     save_file(file_name, upload_to)
                     # adding the image value(directory + filename) in the dict.
                     data2['image'] = image
-                except:
-                    print ('no image hence file not uploaded')
-
-                # handling the checkbox values before storing in database
-                if data2['mail'] == 'on':
-                    data2['mail'] = True
-                else:
-                    data2['mail'] = False
-                if data2['message'] == 'on':
-                    data2['message'] = True
-                else:
-                    data2['message'] = False
-
-                if data2['phonecall'] == 'on':
-                    data2['phonecall'] = True
-                else:
-                    data2['phonecall'] = False
-
-                if data2['other'] == 'on':
-                    data2['other'] = True
-                else:
-                    data2['other'] = False
+                except Exception as e:
+                    # pass
+                    logger = logging.getLogger(constants.LOGGER)
+                    logger.exception("No file to upload" + str(e))
 
                 # updating auth_user and userdetail table
                 User.objects.filter(pk=request.user.pk).update(**data1)
                 UserDetail.objects.filter(
                     user_id=request.user.pk).update(**data2)
-                # issue3 phone range is short
+
                 # success message
                 success_message = "Successfully saved."
+
                 # creating the context
                 ctx = ({
                     'form': form, 'title': 'Edit Profile',
@@ -238,11 +197,11 @@ class EditProfileView(TemplateView):
                     context_instance=RequestContext(request))
         else:
             # error message
-            error_message = "Error...!"
+            error_message = "Error...! "
             # creating the context
         ctx = ({
             'form': form, 'title': 'Edit Profile',
-            'success_message': error_message, 'error_message': error_message})
+            'error_message': error_message})
         return render_to_response(
             'edit_profile.html', ctx,
             context_instance=RequestContext(request))
@@ -286,15 +245,33 @@ class ScrapView(TemplateView):
 
             # create an objec fo Scrap class
             obj = Scrap()
-
+            product_list = None
+            feedback = None
             # scrap the product based on user's choice of the website
             if data['site_choice'] == '1':
-                product_list = obj.amazon(search_item)
+                try:
+                    product_list = obj.amazon(search_item)
+                    # when no product is found,
+                    # set the feedback with error message
+                    if not product_list:
+                        feedback = "Search item not found"
+                except:
+                    feedback = " Search item not found"
             else:
-                product_list = obj.flipkart(search_item)
+                try:
+                    product_list = obj.flipkart(search_item)
+                    # when no product is found,
+                    # set the feedback with error message
+                    if not product_list:
+                        feedback = "Search item not found"
+                except:
+                    feedback = " Search item not found"
 
         # creating a dictionary for the context
-        ctx = {'result': product_list, 'form': form, 'scrap': 'active', 'title': 'Scrap page'}
+        ctx = {
+            'result': product_list, 'form': form, 'scrap': 'active',
+            'title': 'Scrap page', 'feedback': feedback
+        }
         return render(request, self.template_name, ctx)
         # return HttpResponse("result shown")
 

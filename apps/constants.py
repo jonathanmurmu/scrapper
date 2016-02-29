@@ -19,10 +19,7 @@ SITE_CHOICES = (
 SITE_REFERENCE_FLIPKART = 'flipkart'
 SITE_REFERENCE_AMAZON = 'amazon'
 
-# for sending email
-EMAIL_HOST = 'email.mindfiresolutions.com'
-EMAIL_HOST_USER = 'jonathan.murmu@mindfiresolutions.com'
-EMAIL_HOST_PASSWORD = 'jono0077'
-
 # for acitvating the user
 ACTIVATION_URL = "http://localhost:8000/activate/"
+
+LOGGER = "django"

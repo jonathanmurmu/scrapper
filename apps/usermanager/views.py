@@ -18,6 +18,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 import hashlib
 import random
+import logging
 
 
 def signup(request):
@@ -31,7 +32,7 @@ def signup(request):
             data = form.cleaned_data
             if data['confirm_password'] == data['password']:
                 data.pop('confirm_password')
-                password = data['password']
+
                 # encrypting the password before storing in database
                 data['password'] = make_password(
                     data['password'], salt="scrapper")
@@ -55,7 +56,10 @@ def signup(request):
             else:
                 user = None
                 messages.error(request, 'Password did not match.')
-                ctx = ({'form': form, 'title': 'Signup', 'register': 'active', 'nav_dashboard': 'nav-dashboard'})
+                ctx = ({
+                    'form': form, 'title': 'Signup', 'register': 'active',
+                    'nav_dashboard': 'nav-dashboard'
+                })
                 return render_to_response(
                     'signup.html', ctx,
                     context_instance=RequestContext(request))
@@ -72,7 +76,9 @@ def signup(request):
                     Please activate.'
 
                     # creating the context
-                    ctx = ({'message_success': message, 'title': 'Signup'})
+                    ctx = ({'message_success': message, 'title': 'Signup',
+                            'register': 'active',
+                            'nav_dashboard': 'nav-dashboard'})
 
                     return render_to_response(
                         'signup.html', ctx,
@@ -82,7 +88,9 @@ def signup(request):
                     messages.error(request, 'Email sending failed.' + e)
 
                     # creating the context
-                    ctx = ({'form': form, 'title': 'Signup', 'register': 'active', 'nav_dashboard': 'nav-dashboard'})
+                    ctx = ({'form': form, 'title': 'Signup',
+                            'register': 'active',
+                            'nav_dashboard': 'nav-dashboard'})
                     return render_to_response(
                         'signup.html', ctx,
                         context_instance=RequestContext(request))
@@ -90,7 +98,9 @@ def signup(request):
                 pass
     elif request.method == 'GET':
         form = forms.SignUpForm()
-    ctx = ({'form': form, 'title': 'Signup', 'register': 'active', 'nav_dashboard': 'nav-dashboard'})
+    ctx = ({
+        'form': form, 'title': 'Signup', 'register': 'active',
+        'nav_dashboard': 'nav-dashboard'})
     return render_to_response(
         'signup.html', ctx, context_instance=RequestContext(request)
     )
@@ -126,14 +136,49 @@ def activate(request):
     Updating the is_active field in the auth_user table from False to True.
     """
     if request.method == 'GET':
-        data = request.GET.copy()
-        print (data['id'])
-        key = data['id']
-        ua = UserActivation.objects.get(activation_key=key)
-        print (ua.user_id)
-        data = {'is_active': True}
-        User.objects.filter(pk=ua.user_id).update(**data)
-    ctx = {'title': 'Activation'}
+        try:
+            data = request.GET.copy()
+            if data:
+                key = data['id']
+
+                # getting user activation object for the particular activation
+                # key
+                ua = UserActivation.objects.get(activation_key=key)
+                data = {'is_active': True}
+
+                # updating auth user table 'is_active' status to True
+                User.objects.filter(pk=ua.user_id).update(**data)
+                ctx = {'title': 'Activation', 'nav_dashboard': 'nav-dashboard'}
+                return render_to_response(
+                    'activate.html', ctx,
+                    context_instance=RequestContext(request)
+                )
+            else:
+                feedback = "Page not found"
+                ctx = {
+                    'title': 'Activation', 'nav_dashboard': 'nav-dashboard',
+                    'feedback': feedback}
+                return render_to_response(
+                    'activate.html', ctx,
+                    context_instance=RequestContext(request)
+                )
+        except Exception as e:
+            logger = logging.getLogger(constants.LOGGER)
+            logger.exception("Exception :" + str(e))
+
+            # setting the feedback with expection message
+            feedback = str(e)
+
+            # creating the context
+            ctx = {
+                'feedback': feedback, 'title': 'Activation',
+                'nav_dashboard': 'nav-dashboard'}
+            return render_to_response(
+                'activate.html', ctx, context_instance=RequestContext(request)
+            )
+
+    # creating the context
+    ctx = {'title': 'Activation', 'nav_dashboard': 'nav-dashboard'}
     return render_to_response(
         'activate.html', ctx, context_instance=RequestContext(request)
     )
@@ -168,21 +213,27 @@ def app_login(request):
                 # otherwise display error meassage to activate his account
                 else:
                     messages.error(request, 'Please activate your account')
-                ctx = ({'form': form, 'nav_dashboard': 'nav-dashboard', 'login': 'active'})
+                ctx = ({
+                    'form': form, 'nav_dashboard': 'nav-dashboard',
+                    'login': 'active', 'title': 'Login'})
                 return render_to_response(
                     'login.html', ctx,
                     context_instance=RequestContext(request))
             # if the user is not an authenticated user display error message
             else:
                 messages.error(request, 'Wrong username or password.')
-                ctx = ({'form': form, 'nav_dashboard': 'nav-dashboard', 'login': 'active'})
+                ctx = ({
+                    'form': form, 'nav_dashboard': 'nav-dashboard',
+                    'login': 'active', 'title': 'Login'})
                 return render_to_response(
                     'login.html', ctx,
                     context_instance=RequestContext(request))
 
     elif request.method == 'GET':
         form = forms.LoginForm()
-    ctx = ({'form': form, 'title': 'Login', 'nav_dashboard': 'nav-dashboard', 'login': 'active'})
+    ctx = ({
+        'form': form, 'title': 'Login', 'nav_dashboard': 'nav-dashboard',
+        'login': 'active'})
     return render_to_response(
         'login.html', ctx, context_instance=RequestContext(request)
     )

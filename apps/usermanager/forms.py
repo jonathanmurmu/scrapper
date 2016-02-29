@@ -2,11 +2,9 @@
 
 Signup, login and edit profile form.
 """
-# from django.contrib.auth.models import User
 from django import forms
 from .models import UserDetail
 from apps import constants
-# from django.forms import extras
 
 
 class SignUpForm(forms.Form):
@@ -91,8 +89,8 @@ class EditProfileForm(forms.ModelForm):
         choices=constants.MARITAL_CHOICES, required=False)
 
     # textboxes
-    phone = forms.IntegerField(
-        required=False,
+    phone = forms.CharField(
+        required=False, max_length=20, min_length=10,
         widget=forms.TextInput(attrs={
             'class': 'form-control', 'required': False}))
 
@@ -144,6 +142,15 @@ class EditProfileForm(forms.ModelForm):
             'zip_code', 'mail', 'message', 'phonecall', 'other', 'extra_note',
             'image'
         ]
+
+    def clean_phone(self):
+        """Validating the phone field."""
+        phone = self.cleaned_data.get('phone', None)
+        try:
+            int(phone)
+        except (ValueError, TypeError):
+            raise forms.ValidationError('Please enter a valid phone number')
+        return phone
 
     def __init__(self, request, *args, **kwargs):
         """Setting initial value for fields."""

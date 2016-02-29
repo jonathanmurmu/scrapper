@@ -89,23 +89,25 @@ class Scrap(object):
                     product_type=product_type)
                 # checking if the product searched already exists,
                 # if the product already exits
-                # then update the product the product in the database
+                # then update the product in the database
                 if product:
                     Product.objects.filter(pk=product[0].pk).update(**data)
                     product[0].save()
-                    p = product[0]
+                    # 'product_object' is the object of a single product
+                    product_object = product[0]
+
                 # otherwise create a new record in the database
                 else:
-                    p = Product.objects.create(**data)
+                    product_object = Product.objects.create(**data)
 
             # initialize varible 'p' to none if an exception occurs
             except:
-                p = None
+                product_object = None
 
             # creating a list by append all the product that are scraped,
             # so that it can be displayed in the front end
-            if p:
-                product_list.append(p)
+            if product_object:
+                product_list.append(product_object)
 
         # product_list is return to the view to display it in front end
         return product_list
@@ -179,18 +181,19 @@ class Scrap(object):
                 if product:
                     Product.objects.filter(pk=product[0].pk).update(**data)
                     product[0].save()
-                    p = product[0]
+                    # 'product_object' is the object of a single product
+                    product_object = product[0]
                 # otherwise create a new record in the database
                 else:
-                    p = Product.objects.create(**data)
+                    product_object = Product.objects.create(**data)
 
             # initialize varible 'p' to none if an exception occurs
             except:
-                p = None
+                product_object = None
             # creating a list by append all the product that are scraped,
             # so that it can be displayed in the front end
-            if p:
-                product_list.append(p)
+            if product_object:
+                product_list.append(product_object)
 
         # product_list is return to the view to display it in front end
         return product_list
