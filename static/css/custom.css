@@ -1,66 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic);
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,700,300,600,800,400);
-
-
-.section-one{
-	font-size: 25px;
-  padding-top: 2%;
-	padding-bottom: 5%;
-	margin-right: 0px; /*fix for the horizontal scroll bar*/
-}
-.section-two{
-	font-size: 20px;
-	padding-top: 5%;
-	padding-bottom: 5%;
-	background: #eeffff;
-	width: 100%;
-  height: 100%;
-}
-body{
-  min-height: 500px;
-}
-
-
-/* CUSTOMIZE THE NAVBAR
--------------------------------------------------- */
-
-/* Special class on .container surrounding .navbar, used for positioning it into place. */
-.navbar-wrapper {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 20;
-}
-/* Flip around the padding for proper display in narrow viewports */
-.navbar-wrapper > .container {
-  padding-right: 0;
-  padding-left: 0;
-}
-.navbar-wrapper .navbar {
-  padding-right: 15px;
-  padding-left: 15px;
-}
-.navbar-wrapper .navbar .container {
-  width: auto;
-}
-.navbar-custom{
-	opacity: 0.9;
-	/*background: rgba(23, 23, 24, 0.4)*/
-}
-.navbar-custom:hover{
-	opacity: 1.0;
-	/*background: rgba(23, 23, 24, 1.0);*/
-}
-.navbar-default {
-  background-color: rgba(248, 248, 248, 0);
-  border-color: rgba(231, 231, 231, 0);
-}
-.navbar-default .navbar-nav > .active > a{
-  color: #FCAC45 !important;
-  background-color: transparent;
-  font-weight: 700;
-}
+/*positioning the signup and login form*/
 .signup-form, .login-form{
   margin-top: 5%;
   padding-bottom: 5%;
@@ -69,24 +7,30 @@ body{
   padding-right: 10px;
   min-height: 100%;
 }
+
 .min-height-fix{
   padding-top: 20%;
   padding-bottom: 0px;
 }
+
 .form-actions{
   margin-top: 10px;
 }
+
 .login-form{
   padding-top: 5%;
   margin-bottom: 5%;
 }
+
+/*jumbotron for the login form*/
 .jumbotron{
   border-radius: 6px;
   padding-left: 10%;
   padding-right: 10%;
 
 }
-/*home pagge*/
+/*home pagge
+-----------------------------------------------------*/
 #tf-home{
   background: url(../images/01.jpg);
   background-size: cover;
@@ -108,6 +52,7 @@ body{
   height: 750px;
   background-attachment: fixed;
 }
+
 #tf-home p.lead{
   color: #e3e3e3;
 }
@@ -121,10 +66,13 @@ body{
   color: #fcac45;
 }
 /*home page end*/
-/*about page*/
+
+/*about page
+----------------------------------------------------------*/
 #tf-about{
   padding: 80px 0;
 }
+
 ul.about-list{ margin: 30px 0 0 ;}
 ul.about-list li{
   display: block;
@@ -132,12 +80,14 @@ ul.about-list li{
   line-height: 30px;
   font-family: 'Open Sans', sans-serif;
 }
+
 ul.about-list li span{ 
   margin-right: 10px;
 }
 /*about page end*/
-/*services section in home page*/
-/* Services Section */
+
+/*services section in home page
+-------------------------------------------------------------*/
 #tf-services{
   padding: 80px 0;
 }
@@ -167,21 +117,27 @@ ul.about-list li span{
   color: #ffffff;
 }
 /*services section in home page end*/
-/*dashboard page*/
+
+/*dashboard page
+-----------------------------------------------------------------*/
 .dashboard{
   padding-top: 15%;
   margin-bottom: 10%;
   min-height: 570px;
 }
 /*dashboard page end*/
-/*scrap page*/
+
+/*scrap page
+------------------------------------------------------------------*/
 .search-form{
   padding-top: 15%;
   margin-bottom: 10%;
   min-height: 570px;
 }
 /*scrap page end*/
-/*profile page------------------------------*/
+
+/*profile page
+------------------------------------------------------------------*/
 .profile-background {
   background: #F1F3FA;
 }
@@ -190,6 +146,9 @@ ul.about-list li span{
 .profile {
   padding-top: 5%;
   margin: 20px 0;
+}
+.borderless td, .borderless th {
+    border: none !important;
 }
 
 /* Profile sidebar */
@@ -288,27 +247,33 @@ ul.about-list li span{
 .profile-background{
   margin-top: 2%;
 }
+
 .profile-content {
   padding: 20px;
   background: #fff;
   min-height: 460px;
 }
-/*profile page end----------------------------*/
-/* Footer */
+/*profile page end*/
+
+/* Footer
+------------------------------------------------------------*/
 nav#footer{
   background: #222222;
   color: #ffffff;
   padding: 20px 0 15px 0;
 }
+
 nav#footer .fnav{ vertical-align: middle;}
 ul.footer-social li{
   display: inline-block;
   margin-right: 10px;
 }
+
 nav#footer p{
   font-size: 12px;
   margin-top: 10px;
 }
+
 #footer i.fa {
   height: 30px;
   width: 30px;
@@ -319,16 +284,10 @@ nav#footer p{
   color: #8c8c8c;
   transition: all 0.5s;
 }
+
 #footer i.fa:hover{
   background: #FCAC45;
   border-color: #FCAC45;
   color: #ffffff;
 }
 /*footer end*/
-/*testing css*/
-/*navbar*/
-
-
-/*navbar end*/
-
-/*testing css end*/

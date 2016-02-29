@@ -1,5 +1,6 @@
 {% load staticfiles %}
-<!-- html page for the dashboard -->
+<!-- base html page for the dashboard -->
+<!doctype html>
 <html>
 	<head>
 		<!-- content inside the head tag of an html page -->
@@ -8,34 +9,32 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
 		<!--set the page width to size of the device and zoom level to 1-->
 		<meta name="viewport" content="width=device-width,initial-scale=1">
+
 		<title>{{title}}</title>
-		<!-- bootstrap link -->
-			
-		<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
+
+		<!-- stylesheet -->			
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'css/scrolling-nav.css' %}">
-
 	</head>
 	<body>
 		<div class = "container">
 			<!-- navigation bar -->
 			{% include 'navbar_dashboard.html' %}
+
 			<!-- dashboard content -->
 			{% block home-marquee %}
 				<h2>Dashboard<h2>
 			{% endblock %}
-
-
 		</div>
-				
 
 		<!-- footer -->
 		{% include 'footer.html' %}
+
 		<!-- javascript files -->
-		<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
-		<script src="{% static 'js/jquery.min.js' %}"></script>
-		<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
-		<script src="{% static 'js/bootstrap.min.js' %}"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		
 		<!-- Scrolling Nav JavaScript -->
 	    <script src="{% static 'js/jquery.easing.min.js' %}"></script>
 	    <script src="{% static 'js/scrolling-nav.js' %}"></script>

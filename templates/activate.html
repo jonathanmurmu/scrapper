@@ -3,12 +3,20 @@
 <!-- displaying the success message after account activation -->
 {% block home-marquee %}
 <div class="row signup-form min-height-fix">
-	<div class="col-sm-offset-3 col-md-6">			
+	<div class="col-sm-offset-3 col-md-6">	
+		{% if feedback %}
+			<div class="alert alert-danger">
+				<a class="close" href="#" data-dismiss="alert">x</a>
+				<strong>Error!</strong>
+				  	{{feedback}}
+			</div>			
+		{% else %}
 		<div class="alert alert-success text-center">
             <a class="close" href="#" data-dismiss="alert">×</a>
             <strong>Your Accout is activated!</strong>
-                please <a href="{% url 'app_login' %}">login</a>to continue.
-        </div>			
+                Please <a href="{% url 'app_login' %}">login </a>to continue.
+        </div>		
+        {% endif %}	
 	</div>
 </div>
 {% endblock %}

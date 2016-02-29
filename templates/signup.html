@@ -1,8 +1,8 @@
 {% extends 'base_home.html' %}
 {% block home-marquee %}
 <div class="row signup-form">
+	<!-- displaying message on successfull signup -->
 	{% if message_success %}
-
 		<div class="col-sm-offset-3 col-md-6 min-height-fix">			
 			<div class="alert alert-success text-center">
 	            <a class="close" href="#" data-dismiss="alert">×</a>
@@ -18,7 +18,7 @@
 				{{ form.non_field_errors }}
 			   <!--  <fieldset> -->
 			        <legend class="page-header">Create An Account</legend>
-			        <!-- displaying messages -->
+			        <!-- displaying error messages -->
 	                {% for message in messages %}
 	                    {% if 'error' in message.tags %}
 	                        <div class="alert alert-danger">
@@ -29,6 +29,7 @@
 	                    {% endif %}
 	                {% endfor %}
 			        {% for field in form %}
+			        	<!-- displaying errors if any -->
 			            {% if field.errors %}
 			                <div class="control-group has-error has-feedback">
 			                    <label class="control-label">{{ field.label }}*</label> 
@@ -39,6 +40,7 @@
 			                        <span class="glyphicon glyphicon-remove form-control-feedback"></span>
 			                    </div>
 			                </div>
+			            <!-- otherwise display the field without errors -->
 			            {% else %}
 			                <div class="control-group">
 			                    <label class="control-label">{{ field.label }}*</label> 
@@ -50,7 +52,7 @@
 			                </div>
 			            {% endif %}
 			        {% endfor %}
-			    <!-- </fieldset> -->
+			    <!-- signup button -->
 			    <div class="form-actions">
 			        <button type="submit" class="btn btn-warning" >Submit</button>
 			    </div>

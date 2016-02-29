@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block home-marquee %}
-<!-- search form -->
+<!-- search form in dashboard-->
 <div class="row dashboard">
  	<div class = "col-sm-12">
 		<div class="row"><h3 class="text-center">What would you like to search?</h3>
@@ -9,6 +9,7 @@
 		<form action="{% url 'dashboard' %}" method='get'>
 			<div class="form-group col-sm-8 col-sm-offset-2">
 				{{ form.non_field_errors }}
+				<!-- if the field contains errors display error message -->
 				{% if form.search.errors %}
 					<div class="has-error has-feedback">
 						{{ form.search }}
@@ -18,28 +19,27 @@
 		                 <span class="glyphicon glyphicon-remove form-control-feedback"></span>
 					</div>
 				{% else %}
+				<!-- search textfield -->
 					<div class="controls has-feedback">
  						{{form.search}}
  						<span class="glyphicon glyphicon-search form-control-feedback"></span>
-						</div>
-				{% endif %}
-					
+					</div>
+				{% endif %}					
 			</div>
-
+			<!-- submit button -->
 			<div class="form-group col-sm-12 text-center">
 				<button type="submit" name="dashboard_search_submit" class="btn btn-primary " >Search</button>
 			</div>
-
 		</form>
-		{% if feedback %}
+		<!-- displaying error message if no results are found -->
+		{% if result_error %}
 		<div class="col-sm-12 text-center  ">
-			<h3>Sorry, Search item is not present in database.<a href="{% url 'scrap' %}">Lets scrap it</a></h3>
+			<h3>Sorry, search item is not present in database.<a href="{% url 'scrap' %}"> Lets scrap it</a></h3>
 		</div>
 		{% endif %}
 	</div>
 	<!-- displaying the result after searching -->
 	<div class="row">
-		{{result_error}}
 		{%if result%}
 		<div class="row">
 			{% for r in result %}
@@ -50,18 +50,18 @@
 				<div class="col-sm-12">
 					<!-- displaying the image -->
 					<div class="col-md-3 text-center">
-						<a href="{{r.landing_url}}">
+						<a href="{{r.landing_url}}" target="_blank" >
 							<img class="text-center" src="{{r.image}}"/>
 						</a>
 					</div>
 					<div class="col-sm-7">
 						<!-- displaying the name -->
 						<div class="col-sm-12">
-							<a href="{{r.landing_url}}"><h4>{{r.name}}</h4></a>
+							<a href="{{r.landing_url}}" target="_blank" ><h4>{{r.name}}</h4></a>
 						</div>
 						<!-- displaying the price -->
 						<div class="col-sm-12">
-							<h4>Rs: <a href="{{r.landing_url}}"><span class="text-danger">{{r.price}}</span></h4></a>
+							<h4>Rs: <a href="{{r.landing_url}}" target="_blank" ><span class="text-danger">{{r.price}}</span></h4></a>
 						</div>
 						<!-- displaying the category -->
 						<div class="col-sm-12">
@@ -72,20 +72,15 @@
 							<h5>In : {{r.site_reference}}</h5>
 						</div>
 					</div>
+					<!-- buy button of the product -->
 					<div class="col-sm-2 ">
-						<div class="text-center"><a href="{{r.landing_url}}" class="btn btn-lg btn-warning">Buy</a></div>
-					</div>
+						<div class="text-center"><a href="{{r.landing_url}}" target="_blank" class="btn btn-lg btn-warning">Buy</a></div>
+				\	</div>
 				</div>
-
 			</div>
 			{% endfor %}
 		</div>
 		{% endif %}
 	</div>
-
 </div>
-
-
 {% endblock%}
-
-

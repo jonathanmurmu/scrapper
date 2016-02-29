@@ -1,58 +1,60 @@
 {% load static %}j
+<!-- html page for the editing the profile -->
 <html>
 <head>
 	<!-- content inside the head tag of an html page -->
-		<meta charset="UTF-8">
-		<!--tell the IE to use the latest rendering engine-->
-		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
-		<!--set the page width to size of the device and zoom level to 1-->
-		<meta name="viewport" content="width=device-width,initial-scale=1">
-		<title>{{title}}</title>
-		<!-- bootstrap link -->
-		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">	
-		<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
-		<link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
-		<link rel="stylesheet" type="text/css" href="{% static 'css/scrolling-nav.css' %}">
-
+	<meta charset="UTF-8">
+	<!--tell the IE to use the latest rendering engine-->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+	<!--set the page width to size of the device and zoom level to 1-->
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>{{title}}</title>
+	<!-- bootstrap link -->
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/scrolling-nav.css' %}">
 </head>
 <body>
 	<!-- naviagation bar -->
 	{% include 'navbar_dashboard.html' %}
 	<div class="container-fluid profile-background">
 	    <div class="row profile">
+	    	<!-- sidebar -->
 			<div class="col-md-3">
 				<div class="profile-sidebar">
-					<!-- SIDEBAR USERPIC -->
+
+					<!-- sidebar userpic -->
 					<div class="profile-userpic">
 						<img src="{% get_static_prefix %}{{user.userdetail.image}}" class="img-responsive" alt="">
 					</div>
-					<!-- END SIDEBAR USERPIC -->
-					<!-- SIDEBAR USER TITLE -->
+					<!-- end sidebar userpic -->
+					<!-- sidebar title -->
 					<div class="profile-usertitle">
 						<div class="profile-usertitle-name">
-							{{user.first_name}} {{user.last_name}}
+							{{form.first_name.value}} {{form.last_name.value}}
 						</div>
 						<div class="profile-usertitle-job email">
 							{{user.email}}
 						</div>
 					</div>
-					<!-- END SIDEBAR USER TITLE -->
-					<!-- SIDEBAR BUTTONS -->
-					
-					<!-- END SIDEBAR BUTTONS -->
-					<!-- SIDEBAR MENU -->
+					<!-- end sidebar title -->
+
+					<!-- sidebar menu -->
 					<div class="profile-usermenu">
 						<ul class="nav">
+							<!-- overview menu displays the profile -->
 							<li>
 								<a href="{% url 'profile' %}">
 								<i class="glyphicon glyphicon-home"></i>
 								Overview </a>
 							</li>
+							<!-- edit profile menu opens the page for editing the profile -->
 							<li class="active">
 								<a href="{% url 'edit_profile' %}">
 								<i class="glyphicon glyphicon-user"></i>
 								Edit Profile </a>
 							</li>
+							<!-- logs out the user -->
 							<li>
 								<a href="{% url 'logout' %}">
 								<i class="glyphicon glyphicon-log-out"></i>
@@ -60,20 +62,25 @@
 							</li>
 						</ul>
 					</div>
-					<!-- END MENU -->
+					<!-- end menu -->
 				</div>
-			</div> <!--col-md-3-->
+			</div> <!--end sidebar -->
+
+			<!-- edit profile content, displaying all the fields for editin the user profile -->
 			<div class="col-md-9">
 	            <div class="profile-content">
 						<div class="row">
 							<div class="col-md-12">
+								<!-- heading -->
 								<div class="page-header">
 									<h1>
 										Edit Your Profile
 									</h1>
 								</div>
-								<!-- feedback message -->
+
+								<!-- feedback message, -->
 								{% if success_message %}
+								<!-- displaying success message on successfully updating the data -->
 								<div class="col-md-12">
 									<div class="alert alert-success text-center">
 							            <a class="close" href="#" data-dismiss="alert">×</a>
@@ -81,9 +88,10 @@
 							        </div>
 								</div>
 								{% endif %}
+								<!-- displaying error message -->
 								{% if error_message %}
 								<div class="col-md-12">
-									<div class="alert alert-success text-center">
+									<div class="alert alert-danger text-center">
 							            <a class="close" href="#" data-dismiss="alert">×</a>
 							            <strong>{{ error_message }}</strong>							                
 							        </div>
@@ -91,16 +99,19 @@
 								{% endif %}
 							</div>
 						</div>
-						<!-- personal information -->
+						<!-- editing form -->
 						<div class="row">
 							<form acition="{% url 'edit_profile' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
 							{{ form.non_field_errors }}
 								<div class="col-md-2"></div>
+								<!-- fields -->
 								<div class="col-md-8">
 									<!-- First name field -->
 									<div class="form-group col-sm-6">
-										{{ form.first_name.label_tag }}
+										<!-- label -->
+										{{ form.first_name.label_tag }} 
 
+										<!-- displaying validation errors if any -->
 										{% if form.first_name.errors %}
 										<div class="has-error has-feedback">
 											{{ form.first_name }}
@@ -109,6 +120,7 @@
 							                </span>
 							                 <span class="glyphicon glyphicon-remove form-control-feedback"></span>
 										</div>
+										<!-- textfield -->
 										{% else %}
 											{{ form.first_name }}
 										{% endif %}
@@ -117,8 +129,10 @@
 
 									<!-- Last name field -->
 									<div class="form-group col-sm-6">
+										<!-- label -->
 										{{ form.last_name.label_tag }}
 
+										<!-- displaying validation errors if any -->
 										{% if form.last_name.errors %}
 										<div class="has-error has-feedback">
 											{{ form.last_name }}
@@ -127,19 +141,24 @@
 							                </span>
 							                 <span class="glyphicon glyphicon-remove form-control-feedback"></span>
 										</div>
+										<!-- textfield -->
 										{% else %}
 											{{ form.last_name }}
 										{% endif %}
 									</div>									
 									<!-- Marital field -->
 									<div class="form-group col-sm-6">
+										<!-- label -->
 										{{ form.marital.label_tag }}
+										<!-- dropdown -->
 										<div>{{ form.marital }}</div>
-										<div class="help-inline text-danger">{{ form.phone.errors }}</div>
+										<div class="help-inline text-danger">{{ form.marital.errors }}</div>
 									</div>		
 									<!-- Gender field -->
 									<div class="form-group col-sm-6">
+										<!-- label -->
 										{{ form.gender.label_tag }}
+										<!-- radio button -->
 										<div>
 											{% for field in  form.gender %}{{ field }}{% endfor %}
 										</div>
@@ -147,8 +166,9 @@
 									</div>							
 									<!-- Date of birth field -->
 									<div class="form-group col-sm-6">
+										<!-- label -->
 										{{ form.date_of_birth.label_tag }}
-
+										<!-- displaying errors if any -->
 										{% if form.date_of_birth.errors %}
 										<div class="has-error has-feedback">
 											{{ form.date_of_birth }}
@@ -160,14 +180,16 @@
 										{% elif form.date_of_birth.help_text %}
 											<div>{{ form.date_of_birth }}</div>
 											<p class="help-block "><small>{{ form.date_of_birth.help_text }}</small></p>
+										<!-- date feild -->
 										{% else %}
 											<div>{{ form.date_of_birth }}</div>
 										{% endif %}
 									</div>
 									<!-- Phone field -->
 									<div class="form-group col-sm-6">
+										<!-- lable -->
 										{{ form.phone.label_tag }}
-
+										<!-- display errors if any -->
 										{% if form.phone.errors %}
 										<div class="has-error has-feedback">
 											{{ form.phone }}
@@ -186,8 +208,9 @@
 							    	
 									<!-- Address field -->
 									<div class="form-group col-sm-12">
+										<!-- label -->
 										{{ form.address.label_tag }}
-
+										<!-- display errors if any -->
 										{% if form.address.errors %}
 										<div class="has-error has-feedback">
 											{{ form.address }}
@@ -204,8 +227,9 @@
 
 									<!-- Street field -->
 									<div class="form-group col-sm-6">
+										<!-- label -->
 										{{ form.street.label_tag }}
-
+										<!-- display errors if any -->
 										{% if form.street.errors %}
 										<div class="has-error has-feedback">
 											{{ form.street }}
@@ -220,8 +244,9 @@
 									</div>
 									<!-- City field -->
 									<div class="form-group col-sm-6">
+										<!-- label -->
 										{{ form.city.label_tag }}
-
+										<!-- display errors if any -->
 										{% if form.city.errors %}
 										<div class="has-error has-feedback">
 											{{ form.city }}
@@ -236,8 +261,9 @@
 									</div>
 									<!-- State field -->
 									<div class="form-group col-sm-6">
+										<!-- label -->
 										{{ form.state.label_tag }}
-
+										<!-- display errors if any -->
 										{% if form.state.errors %}
 										<div class="has-error has-feedback">
 											{{ form.state }}
@@ -250,11 +276,11 @@
 											<div>{{ form.state }}</div>
 										{% endif %}
 									</div>
-
 									<!-- Zip code field -->
 									<div class="form-group col-sm-6">
+										<!-- label -->
 										{{ form.zip_code.label_tag }}
-
+										<!-- display error if any -->
 										{% if form.zip_code.errors %}
 										<div class="has-error has-feedback">
 											{{ form.zip_code }}
@@ -270,6 +296,7 @@
 									<!-- Preferred communication field -->
 									<div class="form-group col-sm-12">
 										<div><label>Preferred communication:</label></div>
+										<!-- checkbox for the preferred communication medium -->
 										<div class="col-sm-6">
 											<label>{{ form.mail}} Mail</label>
 										</div>
@@ -301,6 +328,7 @@
 									</div>
 									<!-- image field -->
 									<div class="form-group col-sm-12">
+										<!-- label -->
 										{{ form.image.label_tag }}
 
 										{% if form.image.errors %}
@@ -318,6 +346,7 @@
 											<div>{{ form.image }}</div>
 										{% endif %}
 									</div>
+									<!-- Save button -->
 									<div class="form-group col-sm-12">
 										<button type="submit" class="btn btn-success btn-lg " >Save</button>
 									</div>
@@ -331,13 +360,11 @@
 	</div>	
 	
 	<!-- footer -->
-	{% include 'footer.html'%}
-
+	{% include 'footer.html'%}	
 	
-	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
-	<script src="{% static 'js/jquery.min.js' %}"></script>
-	<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
-	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	
 	<!-- Scrolling Nav JavaScript -->
     <script src="{% static 'js/jquery.easing.min.js' %}"></script>
     <script src="{% static 'js/scrolling-nav.js' %}"></script>

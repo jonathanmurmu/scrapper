@@ -1,23 +1,21 @@
-<!-- Navigation -->
+<!-- Navigation for home page-->
     <nav class="navbar {{nav_dashboard}} navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header page-scroll">
+                <!-- toggle button -->
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <!-- brand name -->
                 <a class="navbar-brand page-scroll" href="{%url 'home' %}">Scrappler</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
-                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-                    <li class="hidden">
-                        <a class="page-scroll" href="#page-top"></a>
-                    </li>
                     <li class='{{home}}'><a href="{%url 'home' %}">Home</a></li>
                     <!-- if the user is logged in then diplay the dashboard link in the menu -->
                     {% if user.username %}
@@ -26,15 +24,19 @@
                     <li><a class="page-scroll" href="{%url 'home' %}#tf-about">About</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                <!-- id the user is logged in then display his first name in dropdown -->
+                <!-- if the user is logged in then display his first name and a glyphicon in dropdown -->
                 {% if user.first_name  %}
                 <!-- the dropdown will contain option of viewing the profile page and log out -->
                 <li class="dropdown">
                   <a href="#" class="glyphicon glyphicon-user dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{user.first_name}} <span class="caret "></span></a>
+                  <!-- dropdown displaying various options like viewing profile page, and editing his profile -->
                   <ul class="dropdown-menu">
+                    <!-- link to profile page -->
                     <li><a href="{% url 'profile'%}">Profile</a></li>
+                    <!-- link to edit profile page -->
                     <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
                     <li role="separator" class="divider"></li>
+                    <!-- link to logout -->
                     <li><a href="{% url 'logout' %}">logout</a></li>
                   </ul>
                 </li>
@@ -45,9 +47,7 @@
                 {% endif%}
               </ul>
             </div>
-            <!-- /.navbar-collapse -->
         </div>
-        <!-- /.container -->
     </nav>
 
 
