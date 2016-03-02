@@ -4,7 +4,6 @@ import mechanicalsoup
 # from urllib.request import urlopen
 from apps import constants
 from apps.home.models import Product
-# import datetime
 
 
 class Scrap(object):
@@ -14,7 +13,7 @@ class Scrap(object):
     """
 
     def flipkart(self, search_item):
-        """Scrpaing the product from flipkart.com.
+        """Scrpaing products from flipkart.com.
 
         Extracting the product name, type, price, url, image, description.
         """
@@ -41,52 +40,17 @@ class Scrap(object):
         # looping through each items from search resuts to fetch the details
         # of the product
         for prod in response.soup.find_all("div", {"class": "product-unit"}):
-            # a tag
-            a_tag_href = prod.find("a").attrs['href']
-
-            # img tag
-            img_tag_href = prod.find("img").attrs['data-src']
-
-            # getting the title of the product
-            title = prod.find("div", {"class": "pu-title"}).get_text().strip()
-
-            # getting the price of the product
-            price = prod.find("div", {"class": "pu-final"}).get_text()
-
-            # getting the link of the product in flipkart.com
-            prod_url = constants.FLIPKART_URL + a_tag_href
-            # getting the product description
-            description = prod.find("ul", {"class": "pu-usp"})
-
-            # getting the product type
-            product_type = prod.find("div", {"class": "pu-category"})
-
-            # if the class 'pu-category' exists
-            # then initialize the product type variable
-            if product_type:
-                product_type = product_type.span.get_text()
-            # otherwise the search item itself is the product type
+            if search_item in ['books', 'book']:
+                data = Scrap.flipkart_books(self, prod)
             else:
-                product_type = search_item
-
-            # removing 'Rs.' and commas from the price
-            # and converting it into float type
-            float_price = price.strip(
-                "\n").replace("Rs. ", "").replace(",", "")
-
-            # storing the above information into the dictionary
-            data = {
-                'name': title, 'product_type': product_type,
-                'price': float_price, 'landing_url': prod_url,
-                'image': img_tag_href, 'description': str(description),
-                'site_reference': constants.SITE_REFERENCE_FLIPKART}
+                data = Scrap.flipkart_general(self, prod, search_item)
 
             try:
                 # getting the details of the product
                 # from the database that is searched
                 product = Product.objects.filter(
-                    site_reference='flipkart', name=title,
-                    product_type=product_type)
+                    site_reference='flipkart', name=data['name'],
+                    product_type='books')
                 # checking if the product searched already exists,
                 # if the product already exits
                 # then update the product in the database
@@ -111,6 +75,75 @@ class Scrap(object):
 
         # product_list is return to the view to display it in front end
         return product_list
+
+    def flipkart_books(self, prod):
+        """Scrapping for books in flipkart."""
+        # a tag
+        a_tag_href = prod.find("a").attrs['href']
+
+        # img tag
+        img_tag_href = prod.find("img").attrs['data-src']
+
+        # getting the title of the product
+        title = prod.find("a", {"class": "lu-title"}).get_text().strip()
+
+        # getting the price of the product
+        price = prod.find("div", {"pu-final"}).get_text().strip('Rs. ')
+
+        # getting the link of the product in flipkart.com
+        prod_url = constants.FLIPKART_URL + a_tag_href
+
+        # storing the above information into the dictionary
+        data = {
+            'name': title, 'product_type': 'books',
+            'price': price, 'landing_url': prod_url,
+            'image': img_tag_href, 'description': '',
+            'site_reference': constants.SITE_REFERENCE_FLIPKART}
+        return data
+
+    def flipkart_general(self, prod, search_item):
+        """Scrapping for items other than books."""
+        # a tag
+        a_tag_href = prod.find("a").attrs['href']
+
+        # img tag
+        img_tag_href = prod.find("img").attrs['data-src']
+
+        # getting the title of the product
+        title = prod.find("div", {"class": "pu-title"}).get_text().strip()
+
+        # getting the price of the product
+        price = prod.find("div", {"class": "pu-final"}).get_text()
+
+        # getting the link of the product in flipkart.com
+        prod_url = constants.FLIPKART_URL + a_tag_href
+        # getting the product description
+        description = prod.find("ul", {"class": "pu-usp"})
+
+        # getting the product type
+        product_type = prod.find("div", {"class": "pu-category"})
+
+        # if the class 'pu-category' exists
+        # then initialize the product type variable
+        if product_type:
+            product_type = product_type.span.get_text()
+        # otherwise the search item itself is the product type
+        else:
+            product_type = search_item
+
+        # removing 'Rs.' and commas from the price
+        # and converting it into float type
+        float_price = price.strip(
+            "\n").replace("Rs. ", "").replace(",", "")
+
+        # storing the above information into the dictionary
+        data = {
+            'name': title, 'product_type': product_type,
+            'price': float_price, 'landing_url': prod_url,
+            'image': img_tag_href, 'description': str(description),
+            'site_reference': constants.SITE_REFERENCE_FLIPKART}
+
+        return data
 
     def amazon(self, search_item):
         """Scrpaing the product from amazon.com.

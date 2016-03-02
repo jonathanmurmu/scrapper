@@ -6,7 +6,7 @@
  	<div class = "col-sm-12">
 		<div class="row"><h3 class="text-center">What would you like to search?</h3>
 		</div><br>
-		<form action="{% url 'dashboard' %}" method='get'>
+		<form action="{% url 'dashboard' %}" method='get' id="dashboard_search_form">
 			<div class="form-group col-sm-8 col-sm-offset-2">
 				{{ form.non_field_errors }}
 				<!-- if the field contains errors display error message -->
@@ -28,59 +28,12 @@
 			</div>
 			<!-- submit button -->
 			<div class="form-group col-sm-12 text-center">
-				<button type="submit" name="dashboard_search_submit" class="btn btn-primary " >Search</button>
+				<button type="submit" id="dashboard_search_submit" name="dashboard_search_submit" class="btn btn-primary " >Search</button>
 			</div>
 		</form>
-		<!-- displaying error message if no results are found -->
-		{% if result_error %}
-		<div class="col-sm-12 text-center  ">
-			<h3>Sorry, search item is not present in database.<a href="{% url 'scrap' %}"> Lets scrap it</a></h3>
-		</div>
-		{% endif %}
 	</div>
-	<!-- displaying the result after searching -->
-	<div class="row">
-		{%if result%}
-		<div class="row">
-			{% for r in result %}
-			<div class='col-sm-12'>
-				<div class="page-header col-sm-12">
-				</div>
-
-				<div class="col-sm-12">
-					<!-- displaying the image -->
-					<div class="col-md-3 text-center">
-						<a href="{{r.landing_url}}" target="_blank" >
-							<img class="text-center" src="{{r.image}}"/>
-						</a>
-					</div>
-					<div class="col-sm-7">
-						<!-- displaying the name -->
-						<div class="col-sm-12">
-							<a href="{{r.landing_url}}" target="_blank" ><h4>{{r.name}}</h4></a>
-						</div>
-						<!-- displaying the price -->
-						<div class="col-sm-12">
-							<h4>Rs: <a href="{{r.landing_url}}" target="_blank" ><span class="text-danger">{{r.price}}</span></h4></a>
-						</div>
-						<!-- displaying the category -->
-						<div class="col-sm-12">
-							<h5>Category : {{r.product_type}}</h5>
-						</div>
-						<!-- displaying the site reference -->
-						<div class="col-sm-12">
-							<h5>In : {{r.site_reference}}</h5>
-						</div>
-					</div>
-					<!-- buy button of the product -->
-					<div class="col-sm-2 ">
-						<div class="text-center"><a href="{{r.landing_url}}" target="_blank" class="btn btn-lg btn-warning">Buy</a></div>
-				\	</div>
-				</div>
-			</div>
-			{% endfor %}
-		</div>
-		{% endif %}
+	<!-- area for displaying the results -->
+	<div id="result_area">
 	</div>
 </div>
 {% endblock%}

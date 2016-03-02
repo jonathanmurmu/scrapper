@@ -6,7 +6,7 @@
 		<div class="row"><h3 class="text-center">What would you like to search?</h3>
 		</div><br>
 		<!-- form for searching -->
-		<form action="{% url 'scrap' %}" method='post'>{% csrf_token %}
+		<form action="{% url 'scrap' %}" id="scrap_form" method='post'>{% csrf_token %}
 			<!-- search field -->
 			<div class="form-group col-sm-8 col-sm-offset-2">
 				{{ form.non_field_errors }}
@@ -56,65 +56,7 @@
 		</form>
 	</div>
 
-	<!-- displaying the result after searching -->
-	<div class="row">
-		<!-- displaying result error if any -->
-		{{result_error}}
-		{%if result%}
-		<div class="row">
-			<!-- looping through the result and displaying each product -->
-			{% for r in result %}
-			<div class='col-sm-12'>
-				<!-- page header to draw a line and some padding -->
-				<div class="page-header col-sm-12">
-				</div>
-				<!-- product image, details and the buy button that opens the respective product page in amzon or flipkart -->
-				<div class="col-sm-12">
-					<!-- displaying the image of the product -->
-					<div class="col-md-3 text-center">
-						<a href="{{r.landing_url}}" target="_blank" >
-							<img class="text-center" src="{{r.image}}"/>
-						</a>
-					</div>
-					<!-- product details -->
-					<div class="col-sm-7">
-						<!-- displaying the name -->
-						<div class="col-sm-12">
-							<a href="{{r.landing_url}}" target="_blank" ><h4>{{r.name}}</h4></a>
-						</div>
-						<!-- displaying the price -->
-						<div class="col-sm-12">
-							<h4>Rs: <a href="{{r.landing_url}}" target="_blank" ><span class="text-danger">{{r.price}}</span></h4></a>
-						</div>
-						<!-- displaying the category -->
-						<div class="col-sm-12">
-							<h5>Category : {{r.product_type}}</h5>
-						</div>
-						<!-- displaying the site reference -->
-						<div class="col-sm-12">
-							<h5>In : {{r.site_reference}}</h5>
-						</div>
-					</div>
-					<!-- buy button -->
-					<div class="col-sm-2 ">
-						<div class="text-center"><a href="{{r.landing_url}}" target="_blank" class="btn btn-lg btn-warning">Buy</a></div>
-					</div>
-				</div>
-			</div>
-			{% endfor %}
-		</div>
-		{% endif %}
-		{% if feedback %}
-		<!-- Scrap row-2 -->
-		<div class="row">
-			<!-- Feedback div -->
-			<div class='col-sm-12 col-sm-offset-'>
-				<div class="col-sm-12 text-center  ">
-					<h3 class="text-danger">Sorry! Search item not found, try something else.</h3>
-				</div>
-			</div><!-- end results div -->
-		</div><!-- end scrap row-2 -->
-		{% endif %}
+	<div id="scrap_result_area">
 	</div>
 
 </div> <!-- / row seach-form -->

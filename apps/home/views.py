@@ -17,6 +17,9 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 import logging
 from apps import constants
+import json
+from django.http import HttpResponse
+from django.template.loader import render_to_string
 
 
 class HomeView(TemplateView):
@@ -45,7 +48,7 @@ class DashboardView(TemplateView):
         """Get method for DashboardView class."""
         products = []
         result_error = ""
-        if request.GET:
+        if request.is_ajax():
             form = DashboardSearchForm(request.GET)
             # to display the error message
             if form.is_valid():
@@ -61,11 +64,24 @@ class DashboardView(TemplateView):
                     Q(product_type__icontains=search_item) |
                     Q(description__icontains=search_item)
                 )
-                # when no resuts are found set the result error variable
-                if not products:
-                    result_error = "No result found error."
+                # when resuts are found initial 'resutl' variable
+                if products:
+                    result = products
+                # otherwise initialize error message
+                else:
+                    result = None
+                    result_error = True
+                # create a dictionary to hold the result and the error feedback
+                ctx = {'result': result, 'dashboard_result_error': result_error}
+                html = render_to_string(
+                    'result.html', ctx,
+                    context_instance=RequestContext(request))
+                json_data = json.dumps({'result': html})
+                return HttpResponse(json_data, content_type='application/json')
         else:
             form = DashboardSearchForm()
+
+        # return HttpResponse(json.dumps({'result': products}))
         # create a dictionary for the context
         ctx = {
             'title': 'Dashboard', 'dashboard': 'active', 'form': form,
@@ -248,32 +264,42 @@ class ScrapView(TemplateView):
             product_list = None
             feedback = None
             # scrap the product based on user's choice of the website
+            # 1 is for amazon and 2 is for flipkart
             if data['site_choice'] == '1':
                 try:
                     product_list = obj.amazon(search_item)
                     # when no product is found,
                     # set the feedback with error message
                     if not product_list:
-                        feedback = "Search item not found"
+                        # no items found
+                        feedback = True
                 except:
-                    feedback = " Search item not found"
+                    # no items found
+                    feedback = True
             else:
                 try:
                     product_list = obj.flipkart(search_item)
                     # when no product is found,
                     # set the feedback with error message
                     if not product_list:
-                        feedback = "Search item not found"
+                        # no items found
+                        feedback = True
                 except:
-                    feedback = " Search item not found"
+                    # no items found
+                    feedback = True
 
+        ctx = {'result': product_list, 'scrap_result_error': feedback}
+        html = render_to_string(
+            'result.html', ctx,
+            context_instance=RequestContext(request))
+        json_data = json.dumps({'result': html})
+        return HttpResponse(json_data, content_type='application/json')
         # creating a dictionary for the context
-        ctx = {
-            'result': product_list, 'form': form, 'scrap': 'active',
-            'title': 'Scrap page', 'feedback': feedback
-        }
-        return render(request, self.template_name, ctx)
-        # return HttpResponse("result shown")
+        # ctx = {
+        #     'result': product_list, 'form': form, 'scrap': 'active',
+        #     'title': 'Scrap page', 'feedback': feedback
+        # }
+        # return render(request, self.template_name, ctx)
 
 
 class TestingView(TemplateView):
