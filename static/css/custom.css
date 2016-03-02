@@ -136,6 +136,13 @@ ul.about-list li span{
 }
 /*scrap page end*/
 
+/*loading image in scrap page and dashbaord page
+-------------------------------------------------------------------*/
+.load_div{
+  display: none;
+}
+/*loading image in scrap page and dashboard page end*/
+
 /*profile page
 ------------------------------------------------------------------*/
 .profile-background {
