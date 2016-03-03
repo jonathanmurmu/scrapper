@@ -1,5 +1,7 @@
 $(document).ready(function() {
+    // searching products in dashboard page
     $('#dashboard_search_form').submit(function() { // catch the form's submit event
+
         $.ajax({ // create an AJAX call...
             data: $(this).serialize(), // get the form data
             type: $(this).attr('method'), // GET or POST
@@ -22,14 +24,17 @@ $(document).ready(function() {
                 $('#dashboard_search_submit').removeClass("disabled")
             },
             success: function(json_data) { // on success..
-            	$('#result_area').html(json_data.result)
+                $('#result_area').html(json_data.result)
             },
             error: function() { // on error..
-            	alert("none")
+                alert("none")
             }
         });
+        
         return false;
-    });
+    });    
+    
+    // scrapping products in scrap page
     $('#scrap_form').submit(function() { // catch the form's submit event
         $.ajax({ // create an AJAX call...
             data: $(this).serialize(), // get the form data

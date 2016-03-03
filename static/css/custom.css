@@ -1,5 +1,5 @@
 /*positioning the signup and login form*/
-.signup-form, .login-form{
+.signup-form, .login-form {
   margin-top: 5%;
   padding-bottom: 5%;
   margin-right: 0px;
@@ -8,22 +8,20 @@
   min-height: 100%;
 }
 
-.min-height-fix{
+.min-height-fix {
   padding-top: 20%;
   padding-bottom: 0px;
 }
 
-.form-actions{
-  margin-top: 10px;
-}
+.form-actions { margin-top: 10px; }
 
-.login-form{
+.login-form {
   padding-top: 5%;
   margin-bottom: 5%;
 }
 
 /*jumbotron for the login form*/
-.jumbotron{
+.jumbotron {
   border-radius: 6px;
   padding-left: 10%;
   padding-right: 10%;
@@ -31,7 +29,7 @@
 }
 /*home pagge
 -----------------------------------------------------*/
-#tf-home{
+#tf-home {
   background: url(../images/01.jpg);
   background-size: cover;
   background-position: center;
@@ -41,7 +39,7 @@
   top: 0px; 
 }
 
-#tf-home .overlay{
+#tf-home .overlay {
   background: -moz-linear-gradient(top,  rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.73) 17%, rgba(0,0,0,0.66) 35%, rgba(0,0,0,0.55) 62%, rgba(0,0,0,0.4) 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.8)), color-stop(17%,rgba(0,0,0,0.73)), color-stop(35%,rgba(0,0,0,0.66)), color-stop(62%,rgba(0,0,0,0.55)), color-stop(100%,rgba(0,0,0,0.4))); /* Chrome,Safari4+ */
   background: -webkit-linear-gradient(top,  rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.73) 17%,rgba(0,0,0,0.66) 35%,rgba(0,0,0,0.55) 62%,rgba(0,0,0,0.4) 100%); /* Chrome10+,Safari5.1+ */
@@ -53,27 +51,22 @@
   background-attachment: fixed;
 }
 
-#tf-home p.lead{
-  color: #e3e3e3;
-}
+#tf-home p.lead { color: #e3e3e3; }
 
-.content{
+.content {
   position: relative;
   padding: 20% 0 0;
 }
 
-.color{
-  color: #fcac45;
-}
+.color { color: #fcac45; }
 /*home page end*/
 
 /*about page
 ----------------------------------------------------------*/
-#tf-about{
-  padding: 80px 0;
-}
+#tf-about { padding: 80px 0; }
 
-ul.about-list{ margin: 30px 0 0 ;}
+ul.about-list { margin: 30px 0 0 ; }
+
 ul.about-list li{
   display: block;
   font-size: 16px;
@@ -81,20 +74,14 @@ ul.about-list li{
   font-family: 'Open Sans', sans-serif;
 }
 
-ul.about-list li span{ 
-  margin-right: 10px;
-}
+ul.about-list li span { margin-right: 10px; }
 /*about page end*/
 
 /*services section in home page
 -------------------------------------------------------------*/
-#tf-services{
-  padding: 80px 0;
-}
+#tf-services { padding: 80px 0; }
 
-.space{
-  margin-top: 40px;
-}
+.space { margin-top: 40px; }
 
 #tf-services i.fa {
   font-size: 40px;
@@ -107,12 +94,12 @@ ul.about-list li span{
   transition: all 0.5s;
 }
 
-#tf-services i.fa.fa-mobile{
+#tf-services i.fa.fa-mobile {
   font-size: 50px;
   padding: 20px 25px;
 }
 
-#tf-services .service:hover>i.fa{
+#tf-services .service:hover>i.fa {
   background: #FCAC45;
   color: #ffffff;
 }
@@ -120,16 +107,47 @@ ul.about-list li span{
 
 /*dashboard page
 -----------------------------------------------------------------*/
-.dashboard{
+.dashboard {
   padding-top: 15%;
   margin-bottom: 10%;
   min-height: 570px;
 }
+
+/*customizing the search box*/
+/*.inner-addon { 
+    position: relative; 
+}*/
+
+/* style icon */
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 1px;
+  pointer-events: none;
+}
+
+/*add padding*/
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+
+/* align icon */
+.left-addon .glyphicon  { left:  0px;}
+.right-addon .glyphicon { right: 0px;}
+
+/*removing padding to stick the textbox and the button together*/
+.stick-text { padding-right: 0px; }
+
+.stick-submit{ padding-left: 0px; }
+
+/*customizing the border corner of the search box*/
+.sharp-corner-left { border-radius: 0px 4px 4px 0px; }
+
+.sharp-corner-right { border-radius: 4px 0px 0px 4px; }
+
 /*dashboard page end*/
 
 /*scrap page
 ------------------------------------------------------------------*/
-.search-form{
+.search-form {
   padding-top: 15%;
   margin-bottom: 10%;
   min-height: 570px;
@@ -138,16 +156,12 @@ ul.about-list li span{
 
 /*loading image in scrap page and dashbaord page
 -------------------------------------------------------------------*/
-.load_div{
-  display: none;
-}
+.load_div { display: none; }
 /*loading image in scrap page and dashboard page end*/
 
 /*profile page
 ------------------------------------------------------------------*/
-.profile-background {
-  background: #F1F3FA;
-}
+.profile-background { background: #F1F3FA; }
 
 /* Profile container */
 .profile {
@@ -207,21 +221,13 @@ ul.about-list li span{
   margin-right: 5px;
 }
 
-.profile-userbuttons .btn:last-child {
-  margin-right: 0px;
-}
+.profile-userbuttons .btn:last-child { margin-right: 0px; }
     
-.profile-usermenu {
-  margin-top: 30px;
-}
+.profile-usermenu { margin-top: 30px; }
 
-.profile-usermenu ul li {
-  border-bottom: 1px solid #f0f4f7;
-}
+.profile-usermenu ul li { border-bottom: 1px solid #f0f4f7; }
 
-.profile-usermenu ul li:last-child {
-  border-bottom: none;
-}
+.profile-usermenu ul li:last-child { border-bottom: none; }
 
 .profile-usermenu ul li a {
   color: #93a3b5;
@@ -239,9 +245,7 @@ ul.about-list li span{
   color: #5b9bd1;
 }
 
-.profile-usermenu ul li.active {
-  border-bottom: none;
-}
+.profile-usermenu ul li.active { border-bottom: none; }
 
 .profile-usermenu ul li.active a {
   color: #5b9bd1;
@@ -251,9 +255,7 @@ ul.about-list li span{
 }
 
 /* Profile Content */
-.profile-background{
-  margin-top: 2%;
-}
+.profile-background { margin-top: 2%; }
 
 .profile-content {
   padding: 20px;
@@ -264,19 +266,20 @@ ul.about-list li span{
 
 /* Footer
 ------------------------------------------------------------*/
-nav#footer{
+nav#footer {
   background: #222222;
   color: #ffffff;
   padding: 20px 0 15px 0;
 }
 
-nav#footer .fnav{ vertical-align: middle;}
-ul.footer-social li{
+nav#footer .fnav { vertical-align: middle; }
+
+ul.footer-social li {
   display: inline-block;
   margin-right: 10px;
 }
 
-nav#footer p{
+nav#footer p {
   font-size: 12px;
   margin-top: 10px;
 }
@@ -292,7 +295,7 @@ nav#footer p{
   transition: all 0.5s;
 }
 
-#footer i.fa:hover{
+#footer i.fa:hover {
   background: #FCAC45;
   border-color: #FCAC45;
   color: #ffffff;

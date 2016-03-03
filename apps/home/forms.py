@@ -24,4 +24,4 @@ class DashboardSearchForm(forms.Form):
     search = forms.CharField(
         max_length=255, required=True,
         widget=forms.TextInput(attrs={
-            'class': 'form-control', 'required': True}))
+            'class': 'form-control sharp-corner-right', 'required': True}))
