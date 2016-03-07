@@ -16,6 +16,11 @@ SITE_CHOICES = (
     ('2', 'flipkart.com'),
 )
 
+PRICE_CHOICES = (
+    ('LH', 'Low to High'),
+    ('HL', 'High to Low'),
+)
+
 SITE_REFERENCE_FLIPKART = 'flipkart'
 SITE_REFERENCE_AMAZON = 'amazon'
 

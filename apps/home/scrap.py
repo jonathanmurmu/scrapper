@@ -1,7 +1,5 @@
 """Class to scrap product from flipkart and amazon webisite."""
 import mechanicalsoup
-# from bs4 import BeautifulSoup as bs
-# from urllib.request import urlopen
 from apps import constants
 from apps.home.models import Product
 
@@ -23,12 +21,12 @@ class Scrap(object):
 
         # selecting the form tag to search the specified item
         search_form = flipkart_page.soup.find(
-            "form", {"id": "fk-header-search-form"})
+            "form", {"class": "_1WMLwI"})
 
         # selecting the input tag inside the form tag
         # and then initializing it with the search item.
         search_form.find(
-            "input", {"id": "fk-top-search-box"})["value"] = search_item
+            "input", {"class": "LM6RPg"})["value"] = search_item
 
         # submitting the form and starting the search.
         response = browser.submit(search_form, flipkart_page.url)

@@ -11,6 +11,7 @@ import os
 from apps.home.scrap import Scrap
 from apps.home.forms import ScrapSearchForm
 from apps.home.forms import DashboardSearchForm
+from apps.home.forms import DashboardFilterForm
 from apps.home.models import Product
 from django.db.models import Q
 from django.shortcuts import render_to_response
@@ -20,6 +21,11 @@ from apps import constants
 import json
 from django.http import HttpResponse
 from django.template.loader import render_to_string
+
+
+# global variable to store the result generated from the search
+# this global variable will be used in filtering.
+global_result = None
 
 
 class HomeView(TemplateView):
@@ -34,7 +40,7 @@ class HomeView(TemplateView):
 
 
 class DashboardView(TemplateView):
-    """Class for the dashboard view.
+    """View for the dashboard.
 
     Allows user to search for the product,
      and display the result in the front end.
@@ -50,6 +56,7 @@ class DashboardView(TemplateView):
         result_error = ""
         if request.is_ajax():
             form = DashboardSearchForm(request.GET)
+            form2 = DashboardFilterForm(request.GET)
             # to display the error message
             if form.is_valid():
                 data = form.cleaned_data
@@ -71,27 +78,110 @@ class DashboardView(TemplateView):
                 else:
                     result = None
                     result_error = True
+
+                # set the global variable in order to use this result queryset,
+                # in DashBoardFilter view.
+                global global_result
+                global_result = result
+
                 # create a dictionary to hold the result and the error feedback
-                ctx = {'result': result, 'dashboard_result_error': result_error}
+                ctx = {
+                    'result': result, 'dashboard_result_error': result_error}
                 html = render_to_string(
                     'result.html', ctx,
                     context_instance=RequestContext(request))
+                # encoding it to json
                 json_data = json.dumps({'result': html})
+                # sending the json response
                 return HttpResponse(json_data, content_type='application/json')
         else:
             form = DashboardSearchForm()
+            form2 = DashboardFilterForm()
 
-        # return HttpResponse(json.dumps({'result': products}))
         # create a dictionary for the context
         ctx = {
             'title': 'Dashboard', 'dashboard': 'active', 'form': form,
-            'result': products, 'result_error': result_error
+            'result': products, 'result_error': result_error, 'form2': form2
         }
         return render(request, self.template_name, ctx)
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
         """Post method for DashboardView class."""
+        pass
+
+
+class DashboardFilterView(TemplateView):
+    """View for filtering the results in the dashboard.
+
+    The results can be filtered according to price, site choice etc.
+    """
+
+    template_name = 'dashboard.html'
+
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        """Filtering the results based on price, site choice etc."""
+        result_error = ""
+        # storing the search results in 'results' and applying filters to it'
+        global global_result
+        result = global_result
+        if request.is_ajax():
+            form2 = DashboardFilterForm(request.GET)
+            if form2.is_valid():
+                filter_data = form2.cleaned_data
+                if result:
+                    # sorting price of the result in ascending order
+                    if filter_data['price_sort'] == 'LH':
+                        result = result.order_by('price')
+                    # sorting price of the result in descending order
+                    elif filter_data['price_sort'] == 'HL':
+                        result = result.order_by('-price')
+
+                    # filtering the results for both amazon and flipkart,
+                    # i.e when user check both flipkart and amzon
+                    if filter_data['amazon'] and filter_data['flipkart']:
+                        pass
+                    # filtering the results which are only from amazon
+                    elif filter_data['amazon']:
+                        result = result.filter(
+                            Q(site_reference__icontains='amazon'))
+                    # filtering the results which are only from flipkart
+                    elif filter_data['flipkart']:
+                        result = result.filter(
+                            Q(site_reference__icontains='flipkart'))
+
+                # when no results are found, display the error message,
+                # set the result error flag to true
+                else:
+
+                    # make result to none.
+                    result = None
+                    result_error = True
+
+            else:
+                logger = logging.getLogger(constants.LOGGER)
+                logger.error("Wrong data")
+
+            # create the context
+            ctx = {'result': result, 'dashboard_result_error': result_error}
+            html = render_to_string(
+                'result.html', ctx,
+                context_instance=RequestContext(request))
+            # encoding it to json
+            json_data = {'result': html}
+            # sending the json response
+            return HttpResponse(
+                json.dumps(json_data), content_type='application/json')
+
+        # Contexts to send in html.
+        ctx = {
+            'title': 'Dashboard page', 'dashboard': 'active',
+            'form2': form2}
+        return render(request, "dashboard.html", ctx)
+
+    def post(self, request, *args, **kwargs):
+        """Post method for DashboardFilterView."""
         pass
 
 
@@ -106,7 +196,9 @@ class ProfileView(TemplateView):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         """Get method for ProfileView class."""
+        # create the context
         ctx = {'title': 'Profile'}
+        # render the html page
         return render(request, self.template_name, ctx)
 
     @method_decorator(login_required)
@@ -145,7 +237,7 @@ class EditProfileView(TemplateView):
                 # as the primary key of the user.
                 upload_to = '/uploads/{0}/'.format(request.user.pk)
 
-                # if request.FILES['image'] is empty
+                # if request.FILES['image'] is empty, i.e no photo uploaded,
                 # then intialize file_name to None
                 try:
                     file_name = request.FILES['image']
@@ -278,6 +370,8 @@ class ScrapView(TemplateView):
                     feedback = True
             else:
                 try:
+                    # import pdb
+                    # pdb.set_trace()
                     product_list = obj.flipkart(search_item)
                     # when no product is found,
                     # set the feedback with error message
@@ -288,18 +382,13 @@ class ScrapView(TemplateView):
                     # no items found
                     feedback = True
 
+        # creating the context
         ctx = {'result': product_list, 'scrap_result_error': feedback}
         html = render_to_string(
             'result.html', ctx,
             context_instance=RequestContext(request))
         json_data = json.dumps({'result': html})
         return HttpResponse(json_data, content_type='application/json')
-        # creating a dictionary for the context
-        # ctx = {
-        #     'result': product_list, 'form': form, 'scrap': 'active',
-        #     'title': 'Scrap page', 'feedback': feedback
-        # }
-        # return render(request, self.template_name, ctx)
 
 
 class TestingView(TemplateView):

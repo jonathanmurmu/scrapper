@@ -4,42 +4,115 @@
 <!-- search form in dashboard-->
 <div class="row dashboard">
  	<div class = "col-xs-12">
-		<div class="row"><h3 class="text-center">What would you like to search?</h3>
-		</div><br>
-		<form action="{% url 'dashboard' %}" method='get' id="dashboard_search_form">
-			<div class="form-group col-xs-6 col-xs-offset-2 text-center has-feedback stick-text">
-				{{ form.non_field_errors }}
-				<!-- if the field contains errors display error message -->
-				{% if form.search.errors %}
-					<div class="has-error has-feedback">
-						{{ form.search }}
-						<span class="help-inline text-danger">
-		                    {% for error in  form.search_item.errors %}{{ error }}{% endfor %}
-		                </span>
-		                 <i class="glyphicon glyphicon-remove form-control-feedback"></i>
+		<!-- search box -->
+		<div class="row">
+			<div class="col-xs-12">
+				<form action="{% url 'dashboard' %}" method='get' id="dashboard_search_form">
+					<div class="form-group col-xs-6 col-xs-offset-2 has-feedback stick-text">
+						{{ form.non_field_errors }}
+						<!-- if the field contains errors display error message -->
+						{% if form.search.errors %}
+							<div class="has-error has-feedback">
+								{{ form.search }}
+								<span class="help-inline text-danger">
+				                    {% for error in  form.search_item.errors %}{{ error }}{% endfor %}
+				                </span>
+				                 <i class="glyphicon glyphicon-remove form-control-feedback"></i>
+							</div>
+						{% else %}
+						<!-- search textfield -->
+							<div class="controls has-feedback inner-addon left-addon">
+								<i class="glyphicon glyphicon-search form-control-feedback"></i>
+		 						{{form.search}}
+		 						
+							</div>
+						{% endif %}					
 					</div>
-				{% else %}
-				<!-- search textfield -->
-					<div class="controls has-feedback inner-addon left-addon">
-						<i class="glyphicon glyphicon-search form-control-feedback"></i>
- 						{{form.search}}
- 						
+					<!-- submit button -->
+					<div class="form-group col-xs-2 stick-submit">
+						<button type="submit" id="dashboard_search_submit" name="dashboard_search_submit" class="sharp-corner-left btn btn-primary " >Search</button>
 					</div>
-				{% endif %}					
+				</form>
 			</div>
-			<!-- submit button -->
-			<div class="form-group col-xs-2 stick-submit">
-				<button type="submit" id="dashboard_search_submit" name="dashboard_search_submit" class="sharp-corner-left btn btn-primary " >Search</button>
-			</div>
-		</form>
+		</div>		
 	</div>
-	<!-- area for displaying the results -->
-	<div id="result_area">
-	</div>
-	
-	<!-- loading image -->
-	<div class="col-xs-12">
-		<div class="load_div col-xs-12" id="load_div"><div class="text-center"><img class="loading_img" width="140px" height="140px" src="{% static 'images/loader3.gif' %}"></div></div>
+	<div class="row">
+		<!-- filter panel -->
+		<div class="col-sm-3 filter-panel">
+			<!-- filter panel1 price sorting -->
+			<form action="{% url 'dashboard_filter' %}" id="dashboard_filter_form" method="get" >
+				<div class="page-header"></div>
+
+				<div class="panel-group">
+				    <div class="panel">
+				        <div class="panel-heading">
+				          <h4 class="panel-title">
+				              <a data-toggle="collapse" href="#collapse1">Price Sort</a>
+				          </h4>
+				        </div>
+				        <div id="collapse1" class="panel-collapse collapse in">
+				            <div class="panel-body">
+				            	{% for field in  form2.price_sort %}
+				            		<div>
+				            			{{ field }}
+				            		</div>
+				            	{% endfor %}
+				      		
+				            	<div class="form-group">
+<!-- 				            		<label class="control-radio-inline col-sm-12" >
+										<input type="radio" name="price_sort" class="filter-click"id="low_to_high" value="LH"> Low to high
+							   		</label>
+							   		<label class="control-radio-inline col-sm-12" >
+										<input type="radio" name="price_sort" class="filter-click" id="high_to_low" value="HL"> High to Low
+							   		</label>
+				            	</div>
+				            	<div class="col-sm-12"> -->
+				            					
+				            	</div>						   			           
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				 <!-- filter panel2 site choice -->
+				<div class="page-header"></div>
+				<div class="panel-group">
+				    <div class="panel">
+				        <div class="panel-heading">
+				          <h4 class="panel-title">
+				              <a data-toggle="collapse" href="#collapse2">Site Choice</a>
+				          </h4>
+				        </div>
+				        <div id="collapse2" class="panel-collapse collapse in">
+				            <div class="panel-body">
+
+				            	<div class="checkbox">								 
+									<label>
+										{{form2.amazon}} Amazon
+										<!-- <input type="checkbox" id="checkbox_amazon" name="site_choice" class="filter-click" value="amazon" name="checkbox_amazon"/> -->
+										
+									</label>
+								</div>
+								<div class="checkbox">								 
+									<label>
+										{{form2.flipkart}} Flipkart
+										<!-- <input type="checkbox" class="filter-click" name="site_choice" id="checkbox_flipkart" value="flipkart" name="checkbox_flipkart"/> -->		
+									</label>
+								</div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+			</form>
+		</div>
+
+		<!-- area for displaying the results -->
+		<div id="result_area" class="col-sm-9">
+		</div>
+		
+		<!-- loading image -->
+		<div class="col-sm-12">
+			<div class="load_div col-sm-12" id="load_div"><div class="text-center"><img class="loading_img" width="140px" height="140px" src="{% static 'images/loader3.gif' %}"></div></div>
+		</div>
 	</div>
 </div>
 {% endblock%}

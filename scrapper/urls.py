@@ -17,6 +17,8 @@ urlpatterns = [
         name='edit_profile'),
     url(r'^dashboard/scrap$', views.ScrapView.as_view(), name='scrap'),
 
+    url(r'dashboard/filter/$', views.DashboardFilterView.as_view(), name='dashboard_filter'),
+
     # testign purpose
     url(r'^testing/$', views.TestingView.as_view(), name='testing'),
     # url(r'^testing/demo$', views.TestingDemoView.as_view(), name='testing'),

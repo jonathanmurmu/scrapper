@@ -108,7 +108,7 @@ ul.about-list li span { margin-right: 10px; }
 /*dashboard page
 -----------------------------------------------------------------*/
 .dashboard {
-  padding-top: 15%;
+  padding-top: 20%;
   margin-bottom: 10%;
   min-height: 570px;
 }
@@ -143,6 +143,21 @@ ul.about-list li span { margin-right: 10px; }
 
 .sharp-corner-right { border-radius: 4px 0px 0px 4px; }
 
+/*filter panel*/
+.filter-panel { display: none; }
+
+/*.panel-transparent {
+  background: white !important;
+  border: white
+}
+
+.panel-transparent .panel-heading{
+  background: rgba(0, 0, 0, 0)!important;
+}
+
+.panel-transparent .panel-body{
+  background: rgba(0, 0, 0, 0)!important;
+}*/
 /*dashboard page end*/
 
 /*scrap page
