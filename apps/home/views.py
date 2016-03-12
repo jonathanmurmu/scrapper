@@ -33,7 +33,7 @@ from django.core.urlresolvers import reverse
 class HomeView(TemplateView):
     """Class for the home page view."""
 
-    template_name = 'home.html'
+    template_name = 'home/home.html'
 
     def get(self, request, *args, **kwargs):
         """Get method for HomeView class."""
@@ -53,7 +53,7 @@ class DashboardView(TemplateView):
     The results are fetched from the database.
     """
 
-    template_name = 'dashboard.html'
+    template_name = 'home/dashboard.html'
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
@@ -96,7 +96,7 @@ class DashboardView(TemplateView):
                 ctx = {
                     'result': result, 'dashboard_result_error': result_error}
                 html = render_to_string(
-                    'result.html', ctx,
+                    'home/result.html', ctx,
                     context_instance=RequestContext(request))
                 # encoding it to json
                 json_data = json.dumps({'result': html})
@@ -125,7 +125,7 @@ class DashboardFilterView(TemplateView):
     The results can be filtered according to price, site choice etc.
     """
 
-    template_name = 'dashboard.html'
+    template_name = 'home/dashboard.html'
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
@@ -173,7 +173,7 @@ class DashboardFilterView(TemplateView):
             # create the context
             ctx = {'result': result, 'dashboard_result_error': result_error}
             html = render_to_string(
-                'result.html', ctx,
+                'home/result.html', ctx,
                 context_instance=RequestContext(request))
             # encoding it to json
             json_data = {'result': html}
@@ -185,7 +185,7 @@ class DashboardFilterView(TemplateView):
         ctx = {
             'title': 'Dashboard page', 'dashboard': 'active',
             'form2': form2}
-        return render(request, "dashboard.html", ctx)
+        return render(request, self.template_name, ctx)
 
     def post(self, request, *args, **kwargs):
         """Post method for DashboardFilterView."""
@@ -195,7 +195,7 @@ class DashboardFilterView(TemplateView):
 class ProductDisplayView(TemplateView):
     """View to display the product detail."""
 
-    template_name = 'product_display.html'
+    template_name = 'home/product_display.html'
 
     @method_decorator(login_required)
     def get(self, request, name, *args, **kwargs):
@@ -219,7 +219,7 @@ class ProductDisplayView(TemplateView):
         ctx = {
             'product': product[0], 'title': 'Dashboard', 'dashboard': 'active'
         }
-        return render(request, "product_display.html", ctx)
+        return render(request, self.template_name, ctx)
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
@@ -233,7 +233,7 @@ class ProfileView(TemplateView):
     The profile of the logged in user is displayed.
     """
 
-    template_name = 'profile.html'
+    template_name = 'home/profile.html'
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
@@ -254,7 +254,7 @@ class EditProfileView(TemplateView):
     The user can edit his profile from this view.
     """
 
-    template_name = 'edit_profile.html'
+    template_name = 'home/edit_profile.html'
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
@@ -331,7 +331,7 @@ class EditProfileView(TemplateView):
                     'form': form, 'title': 'Edit Profile',
                     'success_message': success_message})
                 return render_to_response(
-                    'edit_profile.html', ctx,
+                    self.template_name, ctx,
                     context_instance=RequestContext(request))
 
             except Exception as e:
@@ -342,7 +342,7 @@ class EditProfileView(TemplateView):
                     'form': form, 'title': 'Edit Profile',
                     'error_message': error_message})
                 return render_to_response(
-                    'edit_profile.html', ctx,
+                    self.template_name, ctx,
                     context_instance=RequestContext(request))
         else:
             # error message
@@ -352,7 +352,7 @@ class EditProfileView(TemplateView):
             'form': form, 'title': 'Edit Profile',
             'error_message': error_message})
         return render_to_response(
-            'edit_profile.html', ctx,
+            self.template_name, ctx,
             context_instance=RequestContext(request))
         # return HttpResponse("something not right")
 
@@ -374,7 +374,7 @@ def save_file(f, upload_to):
 class ScrapView(TemplateView):
     """View for the scraping page."""
 
-    template_name = "scrap.html"
+    template_name = "home/scrap.html"
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
@@ -426,7 +426,7 @@ class ScrapView(TemplateView):
         # creating the context
         ctx = {'result': product_list, 'scrap_result_error': feedback}
         html = render_to_string(
-            'result.html', ctx,
+            'home/result.html', ctx,
             context_instance=RequestContext(request))
         json_data = json.dumps({'result': html})
         return HttpResponse(json_data, content_type='application/json')

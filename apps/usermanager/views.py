@@ -65,7 +65,7 @@ def signup(request):
                     'nav_dashboard': 'nav-dashboard'
                 })
                 return render_to_response(
-                    'signup.html', ctx,
+                    'usermanager/signup.html', ctx,
                     context_instance=RequestContext(request))
 
             ctx = ({'message': ''})
@@ -85,7 +85,7 @@ def signup(request):
                             'nav_dashboard': 'nav-dashboard'})
 
                     return render_to_response(
-                        'signup.html', ctx,
+                        'usermanager/signup.html', ctx,
                         context_instance=RequestContext(request))
                 except Exception as e:
                     # displaying error message on email sending failure.
@@ -96,7 +96,7 @@ def signup(request):
                             'register': 'active',
                             'nav_dashboard': 'nav-dashboard'})
                     return render_to_response(
-                        'signup.html', ctx,
+                        'usermanager/signup.html', ctx,
                         context_instance=RequestContext(request))
             else:
                 pass
@@ -106,7 +106,7 @@ def signup(request):
         'form': form, 'title': 'Signup', 'register': 'active',
         'nav_dashboard': 'nav-dashboard'})
     return render_to_response(
-        'signup.html', ctx, context_instance=RequestContext(request)
+        'usermanager/signup.html', ctx, context_instance=RequestContext(request)
     )
 
 
@@ -154,7 +154,7 @@ def activate(request):
                 User.objects.filter(pk=ua.user_id).update(**data)
                 ctx = {'title': 'Activation', 'nav_dashboard': 'nav-dashboard'}
                 return render_to_response(
-                    'activate.html', ctx,
+                    'usermanager/activate.html', ctx,
                     context_instance=RequestContext(request)
                 )
             else:
@@ -163,7 +163,7 @@ def activate(request):
                     'title': 'Activation', 'nav_dashboard': 'nav-dashboard',
                     'feedback': feedback}
                 return render_to_response(
-                    'activate.html', ctx,
+                    'usermanager/activate.html', ctx,
                     context_instance=RequestContext(request)
                 )
         except Exception as e:
@@ -178,13 +178,13 @@ def activate(request):
                 'feedback': feedback, 'title': 'Activation',
                 'nav_dashboard': 'nav-dashboard'}
             return render_to_response(
-                'activate.html', ctx, context_instance=RequestContext(request)
+                'usermanager/activate.html', ctx, context_instance=RequestContext(request)
             )
 
     # creating the context
     ctx = {'title': 'Activation', 'nav_dashboard': 'nav-dashboard'}
     return render_to_response(
-        'activate.html', ctx, context_instance=RequestContext(request)
+        'usermanager/activate.html', ctx, context_instance=RequestContext(request)
     )
 
 
@@ -221,7 +221,7 @@ def app_login(request):
                     'form': form, 'nav_dashboard': 'nav-dashboard',
                     'login': 'active', 'title': 'Login'})
                 return render_to_response(
-                    'login.html', ctx,
+                    'usermanager/login.html', ctx,
                     context_instance=RequestContext(request))
             # if the user is not an authenticated user display error message
             else:
@@ -230,7 +230,7 @@ def app_login(request):
                     'form': form, 'nav_dashboard': 'nav-dashboard',
                     'login': 'active', 'title': 'Login'})
                 return render_to_response(
-                    'login.html', ctx,
+                    'usermanager/login.html', ctx,
                     context_instance=RequestContext(request))
 
     elif request.method == 'GET':
@@ -239,5 +239,5 @@ def app_login(request):
         'form': form, 'title': 'Login', 'nav_dashboard': 'nav-dashboard',
         'login': 'active'})
     return render_to_response(
-        'login.html', ctx, context_instance=RequestContext(request)
+        'usermanager/login.html', ctx, context_instance=RequestContext(request)
     )

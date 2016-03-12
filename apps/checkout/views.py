@@ -33,7 +33,7 @@ class DeliveryDetailsView(TemplateView):
     Stores the delivery address in the database.
     """
 
-    template_name = 'delivery_address.html'
+    template_name = 'checkout/delivery_address.html'
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
@@ -105,13 +105,13 @@ class DeliveryDetailsView(TemplateView):
         ctx = {'title': 'Checkout', 'dashboard': 'active'}
 
         # rendering the template
-        return render(request, 'delivery_address.html', ctx)
+        return render(request, self.template_name, ctx)
 
 
 class SummaryView(TemplateView):
     """Class for SummaryView."""
 
-    template_name = 'summary.html'
+    template_name = 'checkout/summary.html'
 
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
@@ -189,7 +189,7 @@ class SummaryView(TemplateView):
 class PaymentView(TemplateView):
     """Class for the payment view."""
 
-    template_name = 'payment.html'
+    template_name = 'checkout/payment.html'
     publish_key = settings.STRIPE_PUBLISHABLE_KEY
 
     @method_decorator(login_required)
