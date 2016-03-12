@@ -45,6 +45,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'apps.home',
     'apps.usermanager',
+    'apps.checkout',
+    'stripe',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -147,7 +149,6 @@ LOGGING = {
         },
     },
 }
-
 
 try:
     from scrapper.local_settings import *

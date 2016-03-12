@@ -42,7 +42,6 @@
 			<!-- filter panel1 price sorting -->
 			<form action="{% url 'dashboard_filter' %}" id="dashboard_filter_form" method="get" >
 				<div class="page-header"></div>
-
 				<div class="panel-group">
 				    <div class="panel">
 				        <div class="panel-heading">
@@ -56,19 +55,7 @@
 				            		<div>
 				            			{{ field }}
 				            		</div>
-				            	{% endfor %}
-				      		
-				            	<div class="form-group">
-<!-- 				            		<label class="control-radio-inline col-sm-12" >
-										<input type="radio" name="price_sort" class="filter-click"id="low_to_high" value="LH"> Low to high
-							   		</label>
-							   		<label class="control-radio-inline col-sm-12" >
-										<input type="radio" name="price_sort" class="filter-click" id="high_to_low" value="HL"> High to Low
-							   		</label>
-				            	</div>
-				            	<div class="col-sm-12"> -->
-				            					
-				            	</div>						   			           
+				            	{% endfor %}					   			           
 				            </div>
 				        </div>
 				    </div>
@@ -88,14 +75,11 @@
 				            	<div class="checkbox">								 
 									<label>
 										{{form2.amazon}} Amazon
-										<!-- <input type="checkbox" id="checkbox_amazon" name="site_choice" class="filter-click" value="amazon" name="checkbox_amazon"/> -->
-										
 									</label>
 								</div>
 								<div class="checkbox">								 
 									<label>
 										{{form2.flipkart}} Flipkart
-										<!-- <input type="checkbox" class="filter-click" name="site_choice" id="checkbox_flipkart" value="flipkart" name="checkbox_flipkart"/> -->		
 									</label>
 								</div>
 				            </div>

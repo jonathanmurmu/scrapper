@@ -27,6 +27,8 @@
   padding-right: 10%;
 
 }
+
+
 /*home pagge
 -----------------------------------------------------*/
 #tf-home {
@@ -61,6 +63,7 @@
 .color { color: #fcac45; }
 /*home page end*/
 
+
 /*about page
 ----------------------------------------------------------*/
 #tf-about { padding: 80px 0; }
@@ -76,6 +79,7 @@ ul.about-list li{
 
 ul.about-list li span { margin-right: 10px; }
 /*about page end*/
+
 
 /*services section in home page
 -------------------------------------------------------------*/
@@ -105,6 +109,7 @@ ul.about-list li span { margin-right: 10px; }
 }
 /*services section in home page end*/
 
+
 /*dashboard page
 -----------------------------------------------------------------*/
 .dashboard {
@@ -112,11 +117,6 @@ ul.about-list li span { margin-right: 10px; }
   margin-bottom: 10%;
   min-height: 570px;
 }
-
-/*customizing the search box*/
-/*.inner-addon { 
-    position: relative; 
-}*/
 
 /* style icon */
 .inner-addon .glyphicon {
@@ -146,19 +146,8 @@ ul.about-list li span { margin-right: 10px; }
 /*filter panel*/
 .filter-panel { display: none; }
 
-/*.panel-transparent {
-  background: white !important;
-  border: white
-}
-
-.panel-transparent .panel-heading{
-  background: rgba(0, 0, 0, 0)!important;
-}
-
-.panel-transparent .panel-body{
-  background: rgba(0, 0, 0, 0)!important;
-}*/
 /*dashboard page end*/
+
 
 /*scrap page
 ------------------------------------------------------------------*/
@@ -169,10 +158,12 @@ ul.about-list li span { margin-right: 10px; }
 }
 /*scrap page end*/
 
+
 /*loading image in scrap page and dashbaord page
 -------------------------------------------------------------------*/
 .load_div { display: none; }
 /*loading image in scrap page and dashboard page end*/
+
 
 /*profile page
 ------------------------------------------------------------------*/
@@ -278,6 +269,18 @@ ul.about-list li span { margin-right: 10px; }
   min-height: 460px;
 }
 /*profile page end*/
+
+
+/*order summary page
+------------------------------------------------------------*/
+.div-border{
+  border: 1px solid #d6e0f5;
+  border-radius: 5px;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+/*order summary page end*/
+
 
 /* Footer
 ------------------------------------------------------------*/

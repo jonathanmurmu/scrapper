@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block home-marquee %}
+	<div class="col-sm-8 col-sm-offset-2" style="min-height : 700px; padding-top: 17%; padding-bottom: 5%;"> 
+		{% if product %} 
+		<div class="col-sm-12">
+			<!-- displaying the image -->
+			<div class="col-md-3 text-center">
+				<a href="{{product.landing_url}}" target="_blank" >
+					<img class="text-center" src="{{product.image}}"/>
+				</a>
+			</div>
+			<div class="col-sm-7">
+				<!-- displaying the name -->
+				<div class="col-sm-12">
+					<a href="{{product.landing_url}}" target="_blank" ><h4>{{product.name}}</h4></a>
+				</div>
+				<!-- displaying the price -->
+				<div class="col-sm-12">
+					<h4>Rs: <a href="{{product.landing_url}}" target="_blank" ><span class="text-danger">{{product.price}}</span></h4></a>
+				</div>
+				<!-- displaying the category -->
+				<div class="col-sm-12">
+					<h5>Category : {{product.product_type}}</h5>
+				</div>
+				<!-- displaying the site reference -->
+				<div class="col-sm-12">
+					<h5>In : {{product.site_reference}}</h5>
+				</div>
+			</div>
+			<!-- buy button of the product -->
+			<div class="col-sm-2 ">
+				<!-- buy form scrappler.com -->
+				<div class="col-sm-12">
+					<a href="{% url 'delivery_address' %}" class="btn btn-lg btn-warning">Buy</a>
+				</div>			
+			</div>
+		</div>
+		{%else%}
+			no product
+		{%endif%}
+	</div>
+{% endblock %}

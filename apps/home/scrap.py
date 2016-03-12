@@ -48,7 +48,8 @@ class Scrap(object):
                 # from the database that is searched
                 product = Product.objects.filter(
                     site_reference='flipkart', name=data['name'],
-                    product_type='books')
+                    product_type=data['product_type']
+                )
                 # checking if the product searched already exists,
                 # if the product already exits
                 # then update the product in the database

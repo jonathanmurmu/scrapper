@@ -1,4 +1,8 @@
-"""View for the home page."""
+"""View for the home page.
+
+Home page view, dashboard view, filter in dashboard, displaying the
+product page profile page and edit page.
+"""
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
@@ -21,11 +25,9 @@ from apps import constants
 import json
 from django.http import HttpResponse
 from django.template.loader import render_to_string
-
-
-# global variable to store the result generated from the search
-# this global variable will be used in filtering.
-global_result = None
+from django.core.cache import cache
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
 
 class HomeView(TemplateView):
@@ -37,6 +39,10 @@ class HomeView(TemplateView):
         """Get method for HomeView class."""
         ctx = {'title': 'Home', 'home': 'active'}
         return render(request, self.template_name, ctx)
+
+    def post(self, request, *args, **kwargs):
+        """Post method for HomeView class."""
+        pass
 
 
 class DashboardView(TemplateView):
@@ -55,9 +61,11 @@ class DashboardView(TemplateView):
         products = []
         result_error = ""
         if request.is_ajax():
+            # search form
             form = DashboardSearchForm(request.GET)
+            # filter form
             form2 = DashboardFilterForm(request.GET)
-            # to display the error message
+
             if form.is_valid():
                 data = form.cleaned_data
                 search_item = data['search']
@@ -71,6 +79,7 @@ class DashboardView(TemplateView):
                     Q(product_type__icontains=search_item) |
                     Q(description__icontains=search_item)
                 )
+
                 # when resuts are found initial 'resutl' variable
                 if products:
                     result = products
@@ -79,10 +88,9 @@ class DashboardView(TemplateView):
                     result = None
                     result_error = True
 
-                # set the global variable in order to use this result queryset,
-                # in DashBoardFilter view.
-                global global_result
-                global_result = result
+                # storing the searched result in the cache,
+                # in order to use it in the DashboardFilterView
+                cache.set('product_result', result, None)
 
                 # create a dictionary to hold the result and the error feedback
                 ctx = {
@@ -124,8 +132,7 @@ class DashboardFilterView(TemplateView):
         """Filtering the results based on price, site choice etc."""
         result_error = ""
         # storing the search results in 'results' and applying filters to it'
-        global global_result
-        result = global_result
+        result = cache.get('product_result')
         if request.is_ajax():
             form2 = DashboardFilterForm(request.GET)
             if form2.is_valid():
@@ -185,6 +192,41 @@ class DashboardFilterView(TemplateView):
         pass
 
 
+class ProductDisplayView(TemplateView):
+    """View to display the product detail."""
+
+    template_name = 'product_display.html'
+
+    @method_decorator(login_required)
+    def get(self, request, name, *args, **kwargs):
+        """Get method for ProductDisplayView class."""
+        # fetching the product from the given slug name of the product
+        product = Product.objects.filter(slug_name=name)
+        try:
+            # fetching the product id of the selected product
+            pk = product[0].pk
+        except:
+            return HttpResponseRedirect(reverse('dashboard'))
+
+        # storing the product id in the cache
+        cache.set('product_id', pk, None)
+
+        # storing the price of the product in the cache
+        cache.set('price', product[0].price, None)
+
+        # creating the context and rendering the html page where the particular
+        # product will be displayed
+        ctx = {
+            'product': product[0], 'title': 'Dashboard', 'dashboard': 'active'
+        }
+        return render(request, "product_display.html", ctx)
+
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwargs):
+        """Post method for ProductDisplayView class."""
+        pass
+
+
 class ProfileView(TemplateView):
     """View for Profile page.
 
@@ -196,9 +238,8 @@ class ProfileView(TemplateView):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         """Get method for ProfileView class."""
-        # create the context
+        # create the context and render the html page
         ctx = {'title': 'Profile'}
-        # render the html page
         return render(request, self.template_name, ctx)
 
     @method_decorator(login_required)
@@ -389,17 +430,3 @@ class ScrapView(TemplateView):
             context_instance=RequestContext(request))
         json_data = json.dumps({'result': html})
         return HttpResponse(json_data, content_type='application/json')
-
-
-class TestingView(TemplateView):
-    """Testing html pages.
-
-    Delete this class, its only for experimenting.
-    """
-
-    template_name = 'hello.html'
-
-    def get(self, request, *args, **kwargs):
-        """Get method to TestingView class."""
-        ctx = {'title': 'testing', 'home': 'active'}
-        return render(request, self.template_name, ctx)

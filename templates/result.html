@@ -55,7 +55,8 @@
 				</div>
 				<!-- buy button of the product -->
 				<div class="col-sm-2 ">
-					<div class="text-center"><a href="{{r.landing_url}}" target="_blank" class="btn btn-lg btn-warning">Buy</a></div>
+					<div class="text-center"><a href="{% url 'product_display' r.slug_name %}" target="_blank" class="btn btn-lg btn-warning">Buy</a></div>
+					<div class="text-center"><a href="{{r.landing_url}}" target="_blank" class="btn btn-lg btn-warning">Buy in {{r.site_reference}}</a></div>
 				</div>
 			</div>
 		</div>

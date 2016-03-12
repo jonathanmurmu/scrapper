@@ -23,14 +23,18 @@ import logging
 
 def signup(request):
     """View for Signup."""
+    # when the user is alread logged in
     if request.user.pk:
-        print (request.user)
         return HttpResponseRedirect(reverse('dashboard'))
+
     if request.method == 'POST':
         form = forms.SignUpForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
+
+            # when the both confirm password and password should match
             if data['confirm_password'] == data['password']:
+                # pop the confirm password as it will not be stored in database
                 data.pop('confirm_password')
 
                 # encrypting the password before storing in database

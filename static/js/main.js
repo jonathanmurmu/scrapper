@@ -1,23 +1,17 @@
 $(document).ready(function() {
     // searching products in dashboard page
-    // var json_result;
-    // var search_item;
-     
     $('#dashboard_search_form').submit(function() { // catch the form's submit event
         $.ajax({ // create an AJAX call...
             data: $(this).serialize(), // get the form data
             type: $(this).attr('method'), // GET or POST
             url: $(this).attr('action'), // the file to call
             beforeSend: function(){
-                // storing the search_item in order to ues it on click of filters.
-                // search_item = $('#id_search').val();
                 // clearing the product result area
                 $('result_area').html('')  
                 
                 // clearing all the filters
                 $('input[name=price_sort]').prop('checked', false);
                 $('input[type=checkbox]').prop('checked', false);
-
 
                 // displaying the loading image
                 $("#load_div").show();
@@ -45,33 +39,9 @@ $(document).ready(function() {
         return false;
     });    
     
+    // for filtering the products in the dashboard
     $('.filter-click').click(function(){
-        // initailizng low to high or high to low in price_sort
-        var price_sort = $('input[name=price_sort]:checked').val();
-
-        // // both flipkart and amazon in checked
-        // if ($('#checkbox_flipkart').prop("checked") == true && $('#checkbox_amazon').prop("checked") == true){
-        //     site_choice = ''
-        // }
-        // // when only amazon is checked
-        // else if ($('#checkbox_amazon').prop("checked") == true){
-        //     site_choice = 'amazon'
-        // }
-        // // when only flipkart is checked
-        // else if ($('#checkbox_flipkart').prop("checked") == true){
-        //     site_choice = 'flipkart'
-        // }    
-        // // when nothing is checked
-        // else{
-        //     site_choice = ''
-        // }
         $.ajax({
-            // data: {
-            //     'price_sort': price_sort, //'site_choice': site_choice
-            //     'amazon': $('#checkbox_amazon').prop("checked"),
-            //     'flipkart': $('#checkbox_flipkart').prop("checked")
-
-            // }, // get the form data
             data: $('#dashboard_filter_form').serialize(),
             type: $('#dashboard_filter_form').attr('method'), // GET or POST
             url: $('#dashboard_filter_form').attr('action'), // the file to call
@@ -93,7 +63,6 @@ $(document).ready(function() {
                 $('#dashboard_search_submit').removeClass("disabled")
             },
             success: function(json_data) { // on success..
-                // json_result = json_data.product;
                 $('.filter-panel').show()
                 $('#result_area').html(json_data.result)
             },
@@ -133,6 +102,31 @@ $(document).ready(function() {
             },
             error: function() { // on error..
                 alert("none")
+            }
+        });
+        return false;
+    });
+
+    // ajax for changing the total on changing the quantity
+    $("#id_quantity").change(function(){
+        $.ajax({ // create an AJAX call...
+            data: $("#quantity_form").serialize(), // get the form data
+            type: $("#quantity_form").attr('method'), // GET or POST
+            url: $("#quantity_form").attr('action'), // the file to call
+            success: function(json_data) { // on success..
+                if (json_data.success){
+                    $('#total_price').html(json_data.total_price)
+                    $('#place_order_link').removeClass("disabled")
+                }
+                else{
+                    alert(json_data.message)
+                    $('#place_order_link').addClass("disabled")
+                }
+                
+            },
+            error: function() { // on error..
+                alert("Error")
+
             }
         });
         return false;

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block home-marquee %}
+
+<div class="col-sm-12" style="min-height : 700px; padding-top: 110px; padding-bottom: 30px;"> 
+	<!-- order summary -->
+	<div class="col-sm-9">
+		<!-- product sumary -->
+		<div class="col-sm-12 div-border">
+			<div class="page-header">
+				<h3>Product Summary</h3>
+			</div>
+			<!-- product image -->
+			<div class="col-sm-4">
+				<img class="text-center" src="{{order.product.image}}"/>
+			</div>
+			<!-- product name and price -->
+			<div class="col-sm-6">
+				<!-- product name -->
+				<div class="col-sm-12">
+					<a href="{% url 'product_display' order.product.slug_name %}"><h4>{{order.product.name}}</h4></a>
+				</div>
+				<!-- product price -->
+				<div class="col-sm-12">
+					<h4>Rs. <span class="text-danger">{{order.product.price}}</span></h4>
+				</div>
+				<!-- Order id -->
+				<div class="col-sm-12">
+					<h4>Order Id: {{order}}</h4>
+				</div>
+			</div>
+			<!-- quantity -->
+			<div class="col-sm-2">
+				<form id="quantity_form"action="{% url 'summary' %}" method="POST">{% csrf_token %}
+					<h5>{{form.as_p}}</h5>
+				</form>
+			</div>
+		</div>
+		<!-- delivery address -->
+		<div class="col-sm-12 div-border">
+			<div class="page-header">
+				<h3>Delivery Address</h3>
+			</div>
+			<div>
+				<!-- name -->
+				<p>{{order.name}}</p>
+				<!-- address -->
+				<p>{{order.address}}</p>
+				<!-- zip code -->
+				<p>Zip: {{order.zip_code}}</p>
+				<!-- phone -->
+				<p>Phone: {{order.phone}}</p>
+			</div>
+		</div>
+	</div>
+	<!-- payable amount -->
+	<div class="col-sm-3 div-border">
+		<div class="col-sm-12">
+			<div class="page-header">
+				<h3>Order Summary</h3>
+			</div>
+		</div>
+		<!-- total payable amount -->
+		<div class="col-sm-12">
+			<div class="col-sm-8">
+				<h4>Payable Amount:</h4>
+			</div>
+			<div class="col-sm-4">
+				<h4>Rs. <span id="total_price">{{order.total}}</span></h4>
+			</div>
+		</div>
+		<!-- order button -->
+		<div class="col-sm-12">
+			<div class="page-header"></div>
+			<a id="place_order_link" href="{% url 'payment' %}" class="btn btn-warning col-sm-12">Place Your Order and Pay</a>		
+		</div>
+		
+	</div>
+</div>
+{% endblock %}

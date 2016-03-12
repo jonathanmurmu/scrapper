@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block home-marquee %}
+
+<div class="col-sm-4 col-sm-offset-4" style="min-height : 700px; padding-top: 17%; padding-bottom: 5%;">  
+	<!-- form for delivery address -->
+	<form action="{% url 'delivery_address' %}" method="POST" id="payment-form"> {% csrf_token %}
+		{{form.as_p}}
+		<button class="btn btn-success" type="submit">Continue</button>
+	</form>
+</div>
+{% endblock %}
