@@ -159,6 +159,21 @@ ul.about-list li span { margin-right: 10px; }
 /*scrap page end*/
 
 
+/*result page
+-------------------------------------------------------------------*/
+.result-buy-button {
+  margin-top: 15px;
+  margin-bottom: 50px;
+  padding: 6px 48px;
+}
+
+.product-display-buy-button {
+  margin-top: 0px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+/*result page end*/
+
 /*loading image in scrap page and dashbaord page
 -------------------------------------------------------------------*/
 .load_div { display: none; }

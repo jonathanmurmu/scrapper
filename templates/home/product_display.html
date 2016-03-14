@@ -10,7 +10,7 @@
 					<img class="text-center" src="{{product.image}}"/>
 				</a>
 			</div>
-			<div class="col-sm-7">
+			<div class="col-sm-9">
 				<!-- displaying the name -->
 				<div class="col-sm-12">
 					<a href="{{product.landing_url}}" target="_blank" ><h4>{{product.name}}</h4></a>
@@ -29,10 +29,10 @@
 				</div>
 			</div>
 			<!-- buy button of the product -->
-			<div class="col-sm-2 ">
+			<div class="col-sm-12 col-sm-offset-3">
 				<!-- buy form scrappler.com -->
 				<div class="col-sm-12">
-					<a href="{% url 'delivery_address' %}" class="btn btn-lg btn-warning">Buy</a>
+					<a href="{% url 'delivery_address' %}" class="btn product-display-buy-button btn-lg btn-warning">Buy</a>
 				</div>			
 			</div>
 		</div>

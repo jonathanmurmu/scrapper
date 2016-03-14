@@ -31,18 +31,18 @@
 			<div class="col-sm-12">
 				<!-- displaying the image -->
 				<div class="col-md-3 text-center">
-					<a href="{{r.landing_url}}" target="_blank" >
+					<a href="{% url 'product_display' r.slug_name %}" target="_blank" >
 						<img class="text-center" src="{{r.image}}"/>
 					</a>
 				</div>
 				<div class="col-sm-7">
 					<!-- displaying the name -->
 					<div class="col-sm-12">
-						<a href="{{r.landing_url}}" target="_blank" ><h4>{{r.name}}</h4></a>
+						<a href="{% url 'product_display' r.slug_name %}" target="_blank" ><h4>{{r.name}}</h4></a>
 					</div>
 					<!-- displaying the price -->
 					<div class="col-sm-12">
-						<h4>Rs: <a href="{{r.landing_url}}" target="_blank" ><span class="text-danger">{{r.price}}</span></h4></a>
+						<h4>Rs: <a href="{% url 'product_display' r.slug_name %}" target="_blank" ><span class="text-danger">{{r.price}}</span></h4></a>
 					</div>
 					<!-- displaying the category -->
 					<div class="col-sm-12">
@@ -55,8 +55,8 @@
 				</div>
 				<!-- buy button of the product -->
 				<div class="col-sm-2 ">
-					<div class="text-center"><a href="{% url 'product_display' r.slug_name %}" target="_blank" class="btn btn-lg btn-warning">Buy</a></div>
-					<div class="text-center"><a href="{{r.landing_url}}" target="_blank" class="btn btn-lg btn-warning">Buy in {{r.site_reference}}</a></div>
+					<div class="text-center"><a href="{% url 'product_display' r.slug_name %}" target="_blank" class="btn btn-warning result-buy-button">Buy</a></div>
+					<div class="text-center"><a href="{{r.landing_url}}" target="_blank" class="btn btn-warning">Buy in {{r.site_reference}}</a></div>
 				</div>
 			</div>
 		</div>
