@@ -1,0 +1,346 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Scrapper Code &mdash; Scrapper 1.0.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Scrapper 1.0.0 documentation" href="index.html"/>
+        <link rel="prev" title="Installation:" href="installation.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Scrapper
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="project.html">Scrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html">Requirements:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="technologies.html">Technologies Used:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation:</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Scrapper Code</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Scrapper</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Scrapper Code</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/code.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-apps.home.views">
+<span id="scrapper-code"></span><h1>Scrapper Code<a class="headerlink" href="#module-apps.home.views" title="Permalink to this headline">¶</a></h1>
+<p>View for the home page.</p>
+<p>Home page view, dashboard view, filter in dashboard, displaying the
+product page profile page and edit page.</p>
+<dl class="class">
+<dt id="apps.home.views.DashboardFilterView">
+<em class="property">class </em><code class="descclassname">apps.home.views.</code><code class="descname">DashboardFilterView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.DashboardFilterView" title="Permalink to this definition">¶</a></dt>
+<dd><p>View for filtering the results in the dashboard.</p>
+<p>The results can be filtered according to price, site choice etc.</p>
+<dl class="method">
+<dt id="apps.home.views.DashboardFilterView.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.DashboardFilterView.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filtering the results based on price, site choice etc.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apps.home.views.DashboardFilterView.post">
+<code class="descname">post</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.DashboardFilterView.post" title="Permalink to this definition">¶</a></dt>
+<dd><p>Post method for DashboardFilterView.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apps.home.views.DashboardView">
+<em class="property">class </em><code class="descclassname">apps.home.views.</code><code class="descname">DashboardView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.DashboardView" title="Permalink to this definition">¶</a></dt>
+<dd><p>View for the dashboard.</p>
+<dl class="docutils">
+<dt>Allows user to search for the product,</dt>
+<dd>and display the result in the front end.</dd>
+</dl>
+<p>The results are fetched from the database.</p>
+<dl class="method">
+<dt id="apps.home.views.DashboardView.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.DashboardView.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get method for DashboardView class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apps.home.views.DashboardView.post">
+<code class="descname">post</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.DashboardView.post" title="Permalink to this definition">¶</a></dt>
+<dd><p>Post method for DashboardView class.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apps.home.views.EditProfileView">
+<em class="property">class </em><code class="descclassname">apps.home.views.</code><code class="descname">EditProfileView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.EditProfileView" title="Permalink to this definition">¶</a></dt>
+<dd><p>View for Edit Profile page.</p>
+<p>The user can edit his profile from this view.</p>
+<dl class="method">
+<dt id="apps.home.views.EditProfileView.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.EditProfileView.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get method for ProfileView class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apps.home.views.EditProfileView.post">
+<code class="descname">post</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.EditProfileView.post" title="Permalink to this definition">¶</a></dt>
+<dd><p>Post method for EditProfileView class.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apps.home.views.HomeView">
+<em class="property">class </em><code class="descclassname">apps.home.views.</code><code class="descname">HomeView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.HomeView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for the home page view.</p>
+<dl class="method">
+<dt id="apps.home.views.HomeView.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.HomeView.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get method for HomeView class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apps.home.views.HomeView.post">
+<code class="descname">post</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.HomeView.post" title="Permalink to this definition">¶</a></dt>
+<dd><p>Post method for HomeView class.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apps.home.views.ProductDisplayView">
+<em class="property">class </em><code class="descclassname">apps.home.views.</code><code class="descname">ProductDisplayView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.ProductDisplayView" title="Permalink to this definition">¶</a></dt>
+<dd><p>View to display the product detail.</p>
+<dl class="method">
+<dt id="apps.home.views.ProductDisplayView.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>request</em>, <em>name</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.ProductDisplayView.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get method for ProductDisplayView class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apps.home.views.ProductDisplayView.post">
+<code class="descname">post</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.ProductDisplayView.post" title="Permalink to this definition">¶</a></dt>
+<dd><p>Post method for ProductDisplayView class.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apps.home.views.ProfileView">
+<em class="property">class </em><code class="descclassname">apps.home.views.</code><code class="descname">ProfileView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.ProfileView" title="Permalink to this definition">¶</a></dt>
+<dd><p>View for Profile page.</p>
+<p>The profile of the logged in user is displayed.</p>
+<dl class="method">
+<dt id="apps.home.views.ProfileView.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.ProfileView.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get method for ProfileView class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apps.home.views.ProfileView.post">
+<code class="descname">post</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.ProfileView.post" title="Permalink to this definition">¶</a></dt>
+<dd><p>Post method for ProfileView class.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apps.home.views.ScrapView">
+<em class="property">class </em><code class="descclassname">apps.home.views.</code><code class="descname">ScrapView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.ScrapView" title="Permalink to this definition">¶</a></dt>
+<dd><p>View for the scraping page.</p>
+<dl class="method">
+<dt id="apps.home.views.ScrapView.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.ScrapView.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get method for the ScrapView class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apps.home.views.ScrapView.post">
+<code class="descname">post</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.ScrapView.post" title="Permalink to this definition">¶</a></dt>
+<dd><p>Post method for ScrapView class.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="apps.home.views.save_file">
+<code class="descclassname">apps.home.views.</code><code class="descname">save_file</code><span class="sig-paren">(</span><em>f</em>, <em>upload_to</em><span class="sig-paren">)</span><a class="headerlink" href="#apps.home.views.save_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saving the photo in the directory.</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="installation.html" class="btn btn-neutral" title="Installation:" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Jonathan.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -36,7 +36,7 @@ class DeliveryDetails(models.Model):
     # price of the product ordered
     price = models.FloatField(null=True, blank=True)
 
-    # total price of the product (qunatity * price)
+    # total price of the product (quantity * price)
     total = models.FloatField(null=True, blank=True)
 
     def save(self, *args, **kwargs):

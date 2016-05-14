@@ -140,20 +140,20 @@ class SummaryView(TemplateView):
         form = DeliveryQuantityForm(request.POST)
         logger = logging.getLogger(constants.LOGGER)
 
-        # for holding the json tha will be send to the template as response
+        # for holding the json that will be send to the template as response
         json_data = {}
 
         # update the quantity and the total price, when the quantity is changed
         # getting the order stored in the cache
         order = cache.get('order')
 
-        # cheecking the form is valid or not
+        # checking the form is valid or not
         if form.is_valid():
             data = form.cleaned_data
             try:
                 quantity = DeliveryDetails.objects.filter(pk=order.id)
 
-                # updating the quatity
+                # updating the quantity
                 quantity.update(**data)
 
                 # this will update the total price (quantity * price)
@@ -233,7 +233,7 @@ class PaymentView(TemplateView):
         except stripe.error.CardError:
             # The card has been declined
             logger = logging.getLogger(constants.LOGGER)
-            logger.error("Card has been cancled, order declined.")
+            logger.error("Card has been canceled, order declined.")
 
             # creating the context and rendering the template
             ctx = {'title': 'Checkout', 'error': True, 'dashboard': 'active'}

@@ -138,6 +138,7 @@ class DashboardFilterView(TemplateView):
             if form2.is_valid():
                 filter_data = form2.cleaned_data
                 if result:
+
                     # sorting price of the result in ascending order
                     if filter_data['price_sort'] == 'LH':
                         result = result.order_by('price')
