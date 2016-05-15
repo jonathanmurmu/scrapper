@@ -43,10 +43,13 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'haystack',
     'apps.home',
     'apps.usermanager',
     'apps.checkout',
     'stripe',
+    'sphinxdoc',
+    'docs',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -149,6 +152,24 @@ LOGGING = {
         },
     },
 }
+
+# HAYSTACK_CONNECTIONS = {
+#     'default': {
+#         'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+#         'URL': 'http://127.0.0.1:9200/',
+#         'INDEX_NAME': 'haystack',
+#     },
+# }
+
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+    },
+}
+
+# DOCS_ROOT = os.path.join(BASE_DIR, 'docs/_build/html')
+# DOCS_ACCESS = 'public'
 
 try:
     from scrapper.local_settings import *

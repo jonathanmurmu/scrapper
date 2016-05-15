@@ -23,8 +23,11 @@ import sphinx_rtd_theme
 # sys.path.insert(0, os.path.abspath('.'))
 
 sys.path.insert(0, os.path.abspath('..'))
-from django.conf import settings
-settings.configure()
+# from django.conf import settings
+# settings.configure()
+os.environ['DJANGO_SETTINGS_MODULE'] = 'scrapper.settings'
+import django
+django.setup()
 
 # -- General configuration ------------------------------------------------
 

@@ -11,7 +11,7 @@ Web scrapers are a useful tool for gathering information and putting it into use
 This web application allows user to extract specific product details from ecommerce sites like www.flipkart.com and www.amazon.in. Extracted product details are then displayed in the front end. Information like product name, price, category, product's image and the source website is displayed. The user can click on the particular product to go to its source website page, to view the product's detailed description and buy the product.
 
 Contents:
---------
+---------
 
 .. toctree::
    :maxdepth: 2

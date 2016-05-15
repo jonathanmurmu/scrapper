@@ -1,6 +1,41 @@
-Scrapper Code
-=============
+Developer's Guide
+=================
 
+Home App
+--------
+
+.. automodule:: apps.home.models
+   :members:
 
 .. automodule:: apps.home.views
+   :members:
+
+.. automodule:: apps.home.forms
+   :members:
+
+.. automodule:: apps.home.scrap
+   :members:
+
+Checkout App
+------------
+
+.. automodule:: apps.checkout.models
+   :members:
+
+.. automodule:: apps.checkout.views
+   :members:
+
+.. automodule:: apps.checkout.forms
+   :members:
+
+Usermanager App
+---------------
+
+.. automodule:: apps.usermanager.models
+   :members:
+
+.. automodule:: apps.usermanager.views
+   :members:
+
+.. automodule:: apps.usermanager.forms
    :members:

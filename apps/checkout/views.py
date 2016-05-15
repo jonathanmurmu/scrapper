@@ -23,7 +23,7 @@ import json
 import logging
 from apps import constants
 
-
+# strip api key
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
@@ -211,7 +211,8 @@ class PaymentView(TemplateView):
     def post(self, request, *args, **kwargs):
         """Post method for CheckoutView class."""
         # the stripe api sends this stripeToken after validating the card
-        token = request.POST['stripeToken']
+        # token = request.POST['stripeToken']
+        token = request.POST.get('stripeToken', False)
 
         # Create the charge on Stripe's servers,
         # this will charge the user's card

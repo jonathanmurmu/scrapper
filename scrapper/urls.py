@@ -6,6 +6,7 @@ from apps.home import views
 from apps.checkout.views import PaymentView
 from apps.checkout.views import DeliveryDetailsView
 from apps.checkout.views import SummaryView
+from django.conf import settings
 # import apps
 
 urlpatterns = [
@@ -27,4 +28,11 @@ urlpatterns = [
     url(r'^checkout/payment/$', PaymentView.as_view(), name='payment'),
     url(r'^checkout/address/$', DeliveryDetailsView.as_view(), name='delivery_address'),
     url(r'^checkout/summary/$', SummaryView.as_view(), name='summary'),
+    url(r'^docs/', include('sphinxdoc.urls')),
+    # url(r'^docs/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.DOCS_ROOT}),
+    # url(r'^docs/', 'django.views.static.serve', {'document_root': settings.DOCS_ROOT, 'path': 'index.html'}),
+
+    # url(r'^docs/', 'django.views.static.serve', {'document_root': settings.DOCS_ROOT, 'path': 'index.html'}),
+    # url(r'^docs/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.DOCS_ROOT}),
+    # url(r'^docs/', include('docs.urls')),
 ]
